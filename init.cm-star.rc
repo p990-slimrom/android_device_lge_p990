@@ -124,9 +124,9 @@ on boot
         chown system system /data/fota
         chmod 0777 /data/fota
 
-        chmod 777 /dev/block/mmcblk0p3
 # kernel read permission
-        chmod 644 /dev/block/mmcblk0p5
+        chmod 644 /dev/block/mmcblk0p6
+        chmod 777 /dev/block/mmcblk0p5
 # 20101107, sglee76@lge.com, FOTA [END]
 
 ## LGE's bluetooth stuff
