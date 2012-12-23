@@ -23,6 +23,9 @@ PRODUCT_COPY_FILES += \
 #PRODUCT_COPY_FILES += \
 #    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/check_sdcard.sh:system/bin/check_sdcard.sh
+
 PRODUCT_PACKAGES += \
     lgcpversion
 
