@@ -15,6 +15,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/fstab.p990:root/fstab.p990
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/charger:root/charger \
+    $(foreach f,$(wildcard $(LOCAL_PATH)/prebuilt/res/images/charger/*),$(f):root/res/images/charger/$(notdir $(f))) \
+    $(foreach f,$(wildcard $(LOCAL_PATH)/prebuilt/res/images/security/*),$(f):root/res/images/security/$(notdir $(f)))
+
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/init.vsnet:system/bin/init.vsnet \
     $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
