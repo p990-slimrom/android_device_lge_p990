@@ -113,6 +113,15 @@ SKIP_SET_METADATA := true
 BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
 
+# TWRP
+TARGET_RECOVERY_INITRC := device/lge/p990/init.recovery.rc
+TW_BRIGHTNESS_PATH := /sys/class/backlight/aat2870-backlight/brightness
+DEVICE_RESOLUTION := 480x800
+TW_INTERNAL_STORAGE_PATH := "/sdcard"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+
 # Various
 TARGET_USE_PIPE := true
 TARGET_USE_OS := true
