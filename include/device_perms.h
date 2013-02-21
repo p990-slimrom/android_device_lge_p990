@@ -55,6 +55,7 @@ struct {
     { "net.pdp",          AID_RADIO,    AID_RADIO },
     { "watchdog.reset_progress",      AID_RADIO,    AID_RADIO },
     { "media.tegra",      AID_MEDIA,    0 },
+    { "service.bootanim.exit", AID_GRAPHICS, 0 },
     { NULL, 0, 0 }
 };
 
