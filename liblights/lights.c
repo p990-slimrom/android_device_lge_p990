@@ -108,13 +108,13 @@ read_int(char const* path)
 static int
 is_lit(struct light_state_t const* state)
 {
-    return state->color & 0x00ffffff;
+    return (read_int(BUTTON_BRIGHTNESS) > 0) ? 1 : 0;
 }
 
 static int
 rgb_to_brightness(struct light_state_t const* state)
 {
-    int color = state->color & 0x00ffffff;
+    int color = state->color; // & 0x00ffffff;
     return ((77*((color>>16)&0x00ff))
             + (150*((color>>8)&0x00ff)) + (29*(color&0x00ff))) >> 8;
 }
@@ -127,14 +127,15 @@ set_light_buttons(struct light_device_t* dev,
     int on = is_lit(state);
     long value = rgb_to_brightness(state);
 
-    ALOGV("Setting button brightness to %ld",value);
+    ALOGV("Setting button brightness to %ld", value);
 
     pthread_mutex_lock(&g_lock);
     /* Change the scale to 0-32 */
-    err = write_int(BUTTON_BRIGHTNESS, (int)(value/8));
-    /*if (!err) {
-        err = write_int(BUTTON_STATE, value ? 1 : 0);
-    }*/
+    if (value > 0) {
+		err = write_int(BUTTON_BRIGHTNESS, (int)(value/8));
+    } else {
+    	err = write_int(BUTTON_BRIGHTNESS, 0);
+    }
     pthread_mutex_unlock(&g_lock);
     return err;
 }
@@ -157,39 +158,37 @@ set_light_backlight(struct light_device_t* dev,
     return err;
 }
 
-/* Disable until pulse is reintroduced
 static int
 set_light_notifications(struct light_device_t* dev,
         struct light_state_t const* state)
 {
     int err = 0;
-    int on = is_lit(state);
-    int red, green, blue = 0;
+	int bri = rgb_to_brightness(state);
 
-    red = (state->color >> 16) & 0xff;
-    green = (state->color >> 8) & 0xff;
-    blue = (state->color) & 0xff;
+	int flashMode = state->flashMode;
+	int flashOnMS = state->flashOnMS;
+	int flashOffMS = state->flashOffMS;
 
-    ALOGV("Calling notification light with state %d",on);
+    ALOGV("Calling notification light with flashMode '%d', fon '%d', foff '%d', bri '%d'\n", flashMode, flashOnMS, flashOffMS, bri);
     pthread_mutex_lock(&g_lock);
-    if (!on) {
-        err = write_int(BUTTON_PULSE, 0);
+    if (! bri) {
         err = write_int(BUTTON_STATE, 0);
     } else {
-        if (green) {
-            err = write_int(BUTTON_BRIGHTNESS, 16);
-            if (!err) err = write_int(BUTTON_STATE, 1);
-        } else if (red) {
-            err = write_int(BUTTON_PULSE, 2000);
-            if (!err) err = write_int(BUTTON_PULSE_INTERVAL, 20000);
-        } else if (blue) {
-            err = write_int(BUTTON_PULSE, 1000);
-            if (!err) err = write_int(BUTTON_PULSE_INTERVAL, 3000);
-        }
+    	if (flashMode == LIGHT_FLASH_TIMED || flashMode == LIGHT_FLASH_HARDWARE)
+    	{
+			if (flashOnMS && flashOffMS)
+			{
+				err = write_int(BUTTON_PULSE, flashOnMS);
+				if (!err) err = write_int(BUTTON_PULSE_INTERVAL, flashOffMS);
+			}
+    	}
+
+		if (!err) err = write_int(BUTTON_BRIGHTNESS, bri);
+        if (!err) err = write_int(BUTTON_STATE, 1);
     }
     pthread_mutex_unlock(&g_lock);
     return err;
-}*/
+}
 
 /** Close the lights device */
 static int
@@ -221,9 +220,9 @@ static int open_lights(const struct hw_module_t* module, char const* name,
     else if (0 == strcmp(LIGHT_ID_BUTTONS, name)) {
         set_light = set_light_buttons;
     }
-    /*else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
+    else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name)) {
         set_light = set_light_notifications;
-    }*/
+    }
     else {
         return -EINVAL;
     }
