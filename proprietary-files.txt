@@ -1,4 +1,5 @@
 etc/nvcamera.conf
+etc/nvram_4329.txt
 etc/ipc_channels.config
 etc/firmware/bcm4329.hcd
 etc/firmware/nvmm_manager.axf
@@ -13,10 +14,6 @@ etc/firmware/nvmm_reference.axf
 etc/firmware/nvmm_jpegenc.axf
 etc/firmware/nvmm_service.axf
 etc/firmware/nvmm_h264dec.axf
-etc/wl/nvram.txt
-etc/wl/rtecdc.bin
-etc/wl/rtecdc-mfgtest.bin
-etc/wl/rtecdc-apsta.bin
 etc/cert/lge.cer
 lib/liblgdrm.so
 lib/libril.so
@@ -119,3 +116,5 @@ usr/share/alsa/pcm/side.conf
 usr/share/alsa/pcm/surround41.conf
 usr/share/alsa/cards/aliases.conf
 usr/share/alsa/alsa.conf
+vendor/firmware/fw_bcmdhd.bin
+vendor/firmware/fw_bcmdhd_apsta.bin
