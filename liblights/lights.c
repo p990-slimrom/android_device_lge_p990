@@ -39,7 +39,7 @@ static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 static struct light_state_t g_notification;
 
 char const*const LCD_FILE
-        = "/sys/devices/platform/i2c-gpio.5/i2c-5/5-0060/intensity";
+        = "/sys/class/backlight/aat2870-backlight/brightness";
 
 char const*const BUTTON_BRIGHTNESS
         = "/sys/class/leds/star_led/brightness";
@@ -54,7 +54,7 @@ char const*const BUTTON_PULSE
         = "/sys/class/leds/star_led/pulse";
 
 char const*const AUTO_BRIGHT_FILE
-        = "/sys/devices/platform/i2c-gpio.5/i2c-5/5-0060/alc";
+        = "/sys/class/backlight/aat2870-backlight/brightness_mode";
 
 /**
  * device methods
