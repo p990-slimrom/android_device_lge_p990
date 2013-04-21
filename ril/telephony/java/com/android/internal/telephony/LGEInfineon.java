@@ -112,6 +112,9 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         Object ret;
         int dataPosition = p.dataPosition(); // save off position within the Parcel
         int response = p.readInt();
+        
+        String basebandVersion = SystemProperties.get("gsm.version.baseband");
+        String[] basebandSplit = basebandVersion == null ? new String[1] : basebandVersion.split("-");
 
         switch(response) {
             case RIL_UNSOL_ON_USSD: ret =  responseStrings(p); break;
