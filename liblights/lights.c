@@ -149,9 +149,7 @@ set_light_backlight(struct light_device_t* dev,
     ALOGV("Setting display brightness to %d",brightness);
 
     pthread_mutex_lock(&g_lock);
-    if (!read_int(AUTO_BRIGHT_FILE)) {
-        err = write_int(LCD_FILE, (brightness));
-    }
+    err = write_int(LCD_FILE, (brightness));
     pthread_mutex_unlock(&g_lock);
 
     return err;
