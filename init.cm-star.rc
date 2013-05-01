@@ -105,6 +105,8 @@ on boot
     chown system system /sys/devices/platform/tegra_gyro_accel/tilt_delay
     chown system system /sys/devices/platform/i2c-gpio.5/i2c-5/5-0060/lsensor_onoff
     chown system system /sys/devices/platform/i2c-gpio.5/i2c-5/5-0060/alc
+    chown system system /sys/class/backlight/aat2870-backlight/brightness
+    chown system system /sys/class/backlight/aat2870-backlight/brightness_mode
 
 # light controls
     chown system system /sys/class/leds/buttonpanel/brightness
