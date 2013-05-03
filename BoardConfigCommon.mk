@@ -50,6 +50,7 @@ BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/star-common/vibrator.c
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/star-common/releasetools/p990-newbl_ota_from_target_files
 
 #BOARD_USES_LGE_HDMI_ROTATION := true
 
