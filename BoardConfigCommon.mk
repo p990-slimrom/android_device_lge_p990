@@ -64,7 +64,7 @@ TARGET_NEEDS_BLUETOOTH_INIT_DELAY := true
 
 COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB -DICS_CAMERA_BLOB
 
-BOARD_SYSFS_LIGHT_SENSOR := "/sys/devices/platform/i2c-gpio.5/i2c-5/5-0060/alc"
+BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
 
 TARGET_KERNEL_SOURCE := kernel/lge/star
 

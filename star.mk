@@ -53,6 +53,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	dalvik.vm.dexopt-data-only=1 \
 	sys.mem.max_hidden_apps=4 \
 	ro.lge.audio_soundexception=true \
+	ro.zram.default=18 \
 	persist.service.zram=18
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
