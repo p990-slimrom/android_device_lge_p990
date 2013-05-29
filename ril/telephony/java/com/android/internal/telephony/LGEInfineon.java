@@ -112,6 +112,9 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         Object ret;
         int dataPosition = p.dataPosition(); // save off position within the Parcel
         int response = p.readInt();
+        
+        String basebandVersion = SystemProperties.get("gsm.version.baseband");
+        String[] basebandSplit = basebandVersion == null ? new String[1] : basebandVersion.split("-");
 
         switch(response) {
             case RIL_UNSOL_ON_USSD: ret =  responseStrings(p); break;
@@ -153,7 +156,9 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 break;
             case 1080: // RIL_UNSOL_LGE_FACTORY_READY (NG)
                 /* Adjust request IDs */
-                RIL_REQUEST_HANG_UP_CALL = 206;
+            	if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])) {
+            		RIL_REQUEST_HANG_UP_CALL = 206;
+            	}
                 break;
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED:
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW:
@@ -175,9 +180,27 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 result[0] = ret;
                 result[1] = Long.valueOf(nitzReceiveTime);
 
-                boolean ignoreNitz = SystemProperties.getBoolean(
-                        TelephonyProperties.PROPERTY_IGNORE_NITZ, false);
-
+                // RIL_UNSOL_NITZ_TIME_RECEIVED handling
+                boolean ignoreNitz = false;
+                if (SystemProperties.getBoolean(TelephonyProperties.PROPERTY_IGNORE_NITZ, false)) {
+                    ignoreNitz = true;
+                } else {
+                    // Detect SU660 Basebands like
+                    // LGSU660AT-00-V20m-450-05-APR-20-2012+0
+                    if ("LGSU660AT".equalsIgnoreCase(basebandSplit[0])) {
+                        ignoreNitz = true;
+                    } else {
+                        // Detect V28e or newer BBs like
+                        // LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0
+                        if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
+                                && (basebandSplit.length > 2)
+                                && (basebandSplit[2].length() == 4)
+                                && (basebandSplit[2].toLowerCase().startsWith("v"))
+                                && (basebandSplit[2].compareToIgnoreCase("V28e") >= 0)) {
+                            ignoreNitz = true;
+                        }
+                    }
+                }
                 if (ignoreNitz) {
                     if (RILJ_LOGD) riljLog("ignoring UNSOL_NITZ_TIME_RECEIVED");
                 } else {
