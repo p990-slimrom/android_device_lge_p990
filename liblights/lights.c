@@ -131,8 +131,10 @@ set_light_buttons(struct light_device_t* dev,
 
     pthread_mutex_lock(&g_lock);
     /* Change the scale to 0-32 */
-    if (value > 0) {
+    if (value >= 8) {
 		err = write_int(BUTTON_BRIGHTNESS, (int)(value/8));
+    } else if (value > 0 && value < 8) {
+        err = write_int(BUTTON_BRIGHTNESS, 1);
     } else {
     	err = write_int(BUTTON_BRIGHTNESS, 0);
     }
