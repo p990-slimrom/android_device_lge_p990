@@ -32,6 +32,19 @@
          The user is forbidden from setting the brightness below this level. -->
     <integer name="config_screenBrightnessSettingMinimum">4</integer>
 
+    <!-- Maximum screen brightness allowed by the power manager.
+         The user is forbidden from setting the brightness above this level. -->
+    <integer name="config_screenBrightnessSettingMaximum">255</integer>
+
+    <!-- Default screen brightness setting.
+         Must be in the range specified by minimum and maximum. -->
+    <integer name="config_screenBrightnessSettingDefault">87</integer>
+    
+    <!-- Screen brightness used to dim the screen when the user activity
+         timeout expires.  May be less than the minimum allowed brightness setting
+         that can be set by the user. -->
+    <integer name="config_screenBrightnessDim">4</integer>
+
     <!-- These are all dummies, but need to be present to enable UI control of auto-brightness
                   The actual control and values are all in-kernel -->
     <integer-array name="config_autoBrightnessLevels">
