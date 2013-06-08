@@ -11,6 +11,7 @@ on init
     mkdir /storage/sdcard 0555 root root
 
     export EXTERNAL_STORAGE /storage/sdcard
+    export SECONDARY_STORAGE /storage/sdcard1
 
     # Support legacy paths
     symlink /storage/sdcard /sdcard
