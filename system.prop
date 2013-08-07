@@ -11,6 +11,8 @@ mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
 # hold precise GC data, and use SMP
 dalvik.vm.dexopt-flags=m=y,u=n,v=n,o=v
 
+ro.bq.gpu_to_cpu_unsupported=1
+
 # GSM, WCDMA preferred
 # This appears to be causing "Unknown" network type
 #ro.telephony.default_network=0
