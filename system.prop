@@ -25,3 +25,5 @@ persist.radio.rr.enable=1
 
 ro.ril.def.agps.mode=1
 
+# enable root
+persist.sys.root_access=3
