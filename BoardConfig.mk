@@ -34,9 +34,11 @@ BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_KERNEL_CMDLINE := 
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800
-TARGET_KERNEL_SOURCE := kernel/lge/star
-TARGET_KERNEL_CONFIG := cyanogenmod_p990_defconfig
-#TARGET_PREBUILT_KERNEL := device/lge/p990/kernel
+#TARGET_KERNEL_SOURCE := kernel/lge/star
+#TARGET_KERNEL_CONFIG := cyanogenmod_p990_defconfig
+
+# prebuilt kernel
+TARGET_PREBUILT_KERNEL := device/lge/p990/kernel/zImage
 
 # wifi
 BOARD_WLAN_DEVICE := bcm4329
