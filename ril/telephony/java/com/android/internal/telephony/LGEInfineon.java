@@ -68,8 +68,8 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         // RIL_REQUEST_LGE_SEND_COMMAND
         RILRequest rrLSC = RILRequest.obtain(
                 0x112, null);
-        rrLSC.mp.writeInt(1);
-        rrLSC.mp.writeInt(0);
+        rrLSC.mParcel.writeInt(1);
+        rrLSC.mParcel.writeInt(0);
         send(rrLSC);
 
         // The original (and unmodified) IMEI request
@@ -116,12 +116,12 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         RILRequest rr
             = RILRequest.obtain(RIL_REQUEST_QUERY_CALL_FORWARD_STATUS, response);
 
-        rr.mp.writeInt(2); // 2 is for query action, not in used anyway
-        rr.mp.writeInt(cfReason);
-        rr.mp.writeInt(511);
-        rr.mp.writeInt(PhoneNumberUtils.toaFromString(number));
-        rr.mp.writeString(number);
-        rr.mp.writeInt (0);
+        rr.mParcel.writeInt(2); // 2 is for query action, not in used anyway
+        rr.mParcel.writeInt(cfReason);
+        rr.mParcel.writeInt(511);
+        rr.mParcel.writeInt(PhoneNumberUtils.toaFromString(number));
+        rr.mParcel.writeString(number);
+        rr.mParcel.writeInt (0);
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
                 + " " + cfReason + " " + serviceClass);
@@ -162,8 +162,8 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
                             + " " + enableMute);
 
-        rr.mp.writeInt(1);
-        rr.mp.writeInt(enableMute ? 7 : 8);
+        rr.mParcel.writeInt(1);
+        rr.mParcel.writeInt(enableMute ? 7 : 8);
 
         send(rr);
     }

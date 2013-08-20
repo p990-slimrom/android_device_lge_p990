@@ -10,6 +10,7 @@ TARGET_BOARD_PLATFORM := tegra
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
+TARGET_CPU_VARIANT := tegra2
 TARGET_ARCH_VARIANT := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_ARCH_VARIANT_FPU := vfpv3-d16
@@ -87,6 +88,8 @@ BOARD_MOBILEDATA_INTERFACE_NAME := "vsnet0"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
 BOARD_HAS_NO_SELECT_BUTTON := true
+TARGET_RECOVERY_FSTAB := device/lge/p990/fstab.star
+RECOVERY_FSTAB_VERSION := 2
 
 # sensors
 BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
