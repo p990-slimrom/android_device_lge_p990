@@ -30,3 +30,5 @@ TARGET_OTA_ASSERT_DEVICE := p990
 BOARD_RIL_CLASS := ../../../device/lge/p990/ril/
 
 #BOARD_TOUCH_RECOVERY := true
+
+TARGET_ARCH_LOWMEM := true
