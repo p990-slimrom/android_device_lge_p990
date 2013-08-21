@@ -96,3 +96,6 @@ RECOVERY_FSTAB_VERSION := 2
 # sensors
 BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
+
+# var
+TARGET_ARCH_LOWMEM := true
