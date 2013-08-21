@@ -72,7 +72,7 @@ USE_OPENGL_RENDERER := true
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 
 # egl
-BOARD_EGL_CFG := device/lge/star-common/egl.cfg
+BOARD_EGL_CFG := device/lge/p990/egl.cfg
 BOARD_EGL_NEEDS_LEGACY_FB := true
 
 # fm
