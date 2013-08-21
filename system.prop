@@ -23,6 +23,4 @@ ro.telephony.ril_class=LGEInfineon
 # Enable RIL recovery
 persist.radio.rr.enable=1
 
-ro.ril.def.agps.mode=1
-
 sys.mem.max_hidden_apps=4
