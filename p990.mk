@@ -119,6 +119,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/check_sdcard.sh:system/bin/check_sdcard.sh \
     $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img
 
+# prebuilt kernel stuff
 LOCAL_KERNEL := device/lge/p990/kernel/zImage
 
 PRODUCT_COPY_FILES += \
@@ -127,6 +128,14 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
     $(LOCAL_PATH)/kernel/wireless.ko:system/lib/modules/wireless.ko \
     $(LOCAL_PATH)/kernel/zram.ko:system/lib/modules/zram.ko
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/kernel/kowalski/power.tegra.so:system/lib/hw/power.tegra.so \
+    $(LOCAL_PATH)/kernel/kowalski/KowalskiManager.apk:system/app/KowalskiManager.apk \
+    $(LOCAL_PATH)/kernel/kowalski/95kowalski:system/etc/init.d/95kowalski \
+    $(LOCAL_PATH)/kernel/kowalski/alsa_amixer:system/xbin/alsa_amixer \
+    $(LOCAL_PATH)/kernel/kowalski/iwconfig:system/xbin/iwconfig \
+    $(LOCAL_PATH)/kernel/kowalski/iwlist:system/xbin/iwlist
 
 PRODUCT_PACKAGES += \
     lgcpversion
