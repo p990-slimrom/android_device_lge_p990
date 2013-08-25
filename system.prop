@@ -24,6 +24,3 @@ ro.telephony.ril_class=LGEInfineon
 persist.radio.rr.enable=1
 
 sys.mem.max_hidden_apps=4
-
-# force GPU rendering
-persist.sys.ui.hw=true
