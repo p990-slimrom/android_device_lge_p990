@@ -26,6 +26,10 @@ TARGET_KERNEL_CONFIG := cyanogenmod_p990-newbl_defconfig
 
 BOARD_VOLD_MAX_PARTITIONS := 20
 
+# egl
+BOARD_EGL_CFG := device/lge/star-common/egl.cfg
+BOARD_EGL_NEEDS_LEGACY_FB := true 
+
 BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
