@@ -98,7 +98,7 @@ PRODUCT_MANUFACTURER := LGE
 $(call inherit-product, device/common/gps/gps_eu.mk)
 
 # Inherit non-open-source blobs.
-$(call inherit-product-if-exists, vendor/lge/p990/p990-vendor.mk)
+$(call inherit-product, vendor/lge/p990/p990-vendor.mk)
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
