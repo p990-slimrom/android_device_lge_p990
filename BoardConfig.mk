@@ -2,7 +2,6 @@ LOCAL_PATH := device/lge/p990
 TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
-TARGET_GCC_VERSION_EXP : 4.8
 
 # CPU
 TARGET_ARCH := arm
