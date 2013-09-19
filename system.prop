@@ -10,6 +10,8 @@ mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
 
 # hold precise GC data, and use SMP
 dalvik.vm.dexopt-flags=m=y,u=n,v=n,o=v
+# disable dalvik logspam
+dalvik.vm.debug.alloc=0
 
 ro.bq.gpu_to_cpu_unsupported=1
 
