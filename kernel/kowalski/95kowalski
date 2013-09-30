@@ -1,0 +1,27 @@
+#!/system/bin/sh
+
+# Enable the ZRAM kernel module
+insmod /system/lib/modules/zram.ko
+
+mkdir /dev/cpuctl
+mount -t cgroup -o cpu none /dev/cpuctl
+
+echo 1024 > /dev/cpuctl/cpu.shares
+echo 950000 > /dev/cpuctl/cpu.rt_runtime_us
+echo 1000000 > /dev/cpuctl/cpu.rt_period_us
+
+mkdir /dev/cpuctl/apps
+echo 1024 > /dev/cpuctl/apps/cpu.shares
+echo 800000 > /dev/cpuctl/apps/cpu.rt_runtime_us
+echo 1000000 > /dev/cpuctl/cpu.rt_period_us
+
+mkdir /dev/cpuctl/apps/bg_non_interactive
+echo 52 > /dev/cpuctl/apps/bg_non_interactive/cpu.shares
+echo 700000 > /dev/cpuctl/apps/bg_non_interactive/cpu.rt_runtime_us
+echo 1000000 > /dev/cpuctl/apps/bg_non_interactive/cpu.rt_period_us
+
+mkdir /dev/timer_group
+mount -t cgroup -o timer_slack none /dev/timer_group
+
+mkdir /dev/timer_group/bg
+echo 500000000 > /dev/timer_group/bg/timer_slack.min_slack_ns
