@@ -50,6 +50,12 @@ on boot
 on property:dev.bootcomplete=1
     start setcpversion
 
+service charger /charger
+    class charger
+    user root
+    group root
+    oneshot
+
 service glgps /system/bin/glgps -c /system/etc/gps_brcm_conf.xml
     class core
     user system
