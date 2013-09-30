@@ -1,24 +1,29 @@
-# The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_eu.mk)
-
-$(call inherit-product, device/lge/star-common/star.mk)
-
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
-
-# Inherit non-open-source blobs.
-$(call inherit-product-if-exists, vendor/lge/p990/p990-vendor.mk)
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    device/lge/p990/init.p990.rc:root/init.star.rc \
-    $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
-    $(LOCAL_PATH)/fstab.p990:root/fstab.p990 
+    $(LOCAL_PATH)/init_recovery.rc:root/init_recovery.rc \
+    $(LOCAL_PATH)/init.cm-star.rc:root/init.cm-star.rc \
+    $(LOCAL_PATH)/init.star.usb.rc:root/init.star.usb.rc
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
-    $(LOCAL_PATH)/init.vsnet:system/bin/init.vsnet \
-    $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
-    $(LOCAL_PATH)/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
+    $(LOCAL_PATH)/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/asound.conf:system/etc/asound.conf \
+    $(LOCAL_PATH)/config/audio_policy.conf:system/etc/audio_policy.conf \
+    $(LOCAL_PATH)/egl.cfg:system/lib/egl/egl.cfg \
+    $(LOCAL_PATH)/prebuilt/setup-recovery:system/bin/setup-recovery \
+    $(LOCAL_PATH)/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    $(LOCAL_PATH)/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/star_synaptics.idc:system/usr/idc/star_synaptics.idc \
+    $(LOCAL_PATH)/prebuilt/star_synaptics.kl:system/usr/keylayout/star_synaptics.kl \
+    $(LOCAL_PATH)/prebuilt/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/prebuilt/tegra-snd-wm8994.kl:system/usr/keylayout/tegra-snd-wm8994.kl \
+    $(LOCAL_PATH)/prebuilt/usb_keyboard_102_en_us.kl:system/usr/keylayout/usb_keyboard_102_en_us.kl \
+    $(LOCAL_PATH)/prebuilt/usb_keyboard_102_en_us.kcm.bin:system/usr/keychars/usb_keyboard_102_en_us.kcm.bin
 
 # Permission files
 PRODUCT_COPY_FILES += \
@@ -36,14 +41,93 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
-# Camera Wrapper
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.opengles.version=131072 \
+        ro.telephony.call_ring.multiple=false \
+        ro.telephony.call_ring.delay=3000 \
+        ro.telephony.call_ring.absent=true \
+        ro.hardware.respect_als=true \
+        ro.bt.bdaddr_path=/sys/devices/platform/bd_address/bdaddr_if \
+	debug.sf.electron_frames=42 \
+	nv-camera-disable-early-graph=1 \
+	dalvik.vm.dexopt-data-only=1 \
+	sys.mem.max_hidden_apps=4 \
+	ro.lge.audio_soundexception=true \
+	ro.zram.default=18 \
+	persist.service.zram=18
+
+$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
+
+$(call inherit-product, build/target/product/full_base_telephony.mk)
+
+PRODUCT_LOCALES += hdpi
+
+## Ugly space-saving hack
 PRODUCT_PACKAGES += \
-    camerawrapper \
-    camera.tegra
+    srec-en
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/10-movestuff.sh:system/addon.d/10-movestuff.sh
+
+## LGE stuffs
+PRODUCT_PACKAGES += \
+    bridgeutil \
+    lights.star \
+    libbridge \
+    libbridge_jni \
+    screencap \
+    audio.a2dp.default \
+    hwcomposer.default \
+    com.android.future.usb.accessory
+
+# Enable Torch
+PRODUCT_PACKAGES += Torch
+
+# Set default USB interface
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+	persist.sys.usb.config=mtp,adb
+
+PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+PRODUCT_MANUFACTURER := LGE
+
+# The gps config appropriate for this device
+$(call inherit-product, device/common/gps/gps_eu.mk)
+
+# Inherit non-open-source blobs.
+$(call inherit-product-if-exists, vendor/lge/p990/p990-vendor.mk)
+
+# Board-specific init
+PRODUCT_COPY_FILES += \
+    device/lge/p990/init.p990.rc:root/init.star.rc \
+    $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
+    $(LOCAL_PATH)/fstab.p990:root/fstab.p990
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/charger:root/charger \
+    $(foreach f,$(wildcard $(LOCAL_PATH)/prebuilt/res/images/charger/*),$(f):root/res/images/charger/$(notdir $(f))) \
+    $(foreach f,$(wildcard $(LOCAL_PATH)/prebuilt/res/images/security/*),$(f):root/res/images/security/$(notdir $(f)))
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
+    $(LOCAL_PATH)/init.vsnet:system/bin/init.vsnet \
+    $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
+    $(LOCAL_PATH)/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
+
+# Build kernel module instead of copying
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/check_sdcard.sh:system/bin/check_sdcard.sh \
-    $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img 
+    $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img
+
+LOCAL_KERNEL := device/lge/p990/kernel/zImage
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel \
+    $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko \
+    $(LOCAL_PATH)/kernel/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
+    $(LOCAL_PATH)/kernel/wireless.ko:system/lib/modules/wireless.ko \
+    $(LOCAL_PATH)/kernel/zram.ko:system/lib/modules/zram.ko
 
 PRODUCT_PACKAGES += \
     lgcpversion
