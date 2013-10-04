@@ -56,9 +56,6 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
       Enable or disable the execution of backuptool.sh.
       Disabled by default.
 
-  --override_device <device>
-      Override device-specific asserts. Can be a comma-separated list.
-
 """
 
 import sys
@@ -96,7 +93,6 @@ OPTIONS.extra_script = None
 OPTIONS.aslr_mode = True
 OPTIONS.worker_threads = 3
 OPTIONS.backuptool = False
-OPTIONS.override_device = 'auto'
 
 def MostPopularKey(d, default):
   """Given a dict, return the key corresponding to the largest
@@ -265,6 +261,28 @@ class Item:
 
     recurse(self, (-1, -1, -1, -1))
 
+def CopyDataFiles(input_zip, output_zip=None,
+                    substitute=None):
+  """Copies files underneathe data/ in the input zip to the output
+  zip. Populates the Item class with their metadata, and returns a
+  skipped (but the other side effects still happen). substitute is an
+  optional dict of {output filename: contents} to be output instead of
+  certain input files.
+  """
+
+  for info in input_zip.infolist():
+    if info.filename.startswith("DATA/"):
+      basefilename = info.filename[5:]
+      info2 = copy.copy(info)
+      fn = info2.filename = "data/" + basefilename
+      if output_zip is not None:
+        data = input_zip.read(info.filename)
+        output_zip.writestr(info2, data)
+        if fn.endswith("/"):
+          Item.Get(fn[:-1], dir=True)
+        else:
+          Item.Get(fn, dir=False)
+  return
 
 def CopySystemFiles(input_zip, output_zip=None,
                     substitute=None):
@@ -310,14 +328,6 @@ def SignOutput(temp_zip_name, output_zip_name):
 
   common.SignFile(temp_zip_name, output_zip_name, OPTIONS.package_key, pw,
                   whole_file=True)
-
-
-def AppendAssertions(script, info_dict):
-  if OPTIONS.override_device == "auto":
-    device = GetBuildProp("ro.product.device", info_dict)
-  else:
-    device = OPTIONS.override_device
-  script.AssertDevice(device)
 
 
 def MakeRecoveryPatch(input_tmp, output_zip, recovery_img, boot_img):
@@ -397,11 +407,6 @@ def WriteFullOTAPackage(input_zip, output_zip):
       metadata=metadata,
       info_dict=OPTIONS.info_dict)
 
-  #if not OPTIONS.omit_prereq:
-  #  ts = GetBuildProp("ro.build.date.utc", OPTIONS.info_dict)
-  #  script.AssertOlderBuild(ts)
-
-  AppendAssertions(script, OPTIONS.info_dict)
   device_specific.FullOTA_Assertions()
   device_specific.FullOTA_InstallBegin()
 
@@ -411,6 +416,12 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.Unmount("/system")
 
   script.ShowProgress(0.5, 0)
+  script.Print("")
+  script.Print("")
+  script.Print("Slim Roms")
+  script.Print("")
+  script.Print(" www.slimroms.net  ")
+  script.Print("")
 
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
@@ -418,11 +429,15 @@ def WriteFullOTAPackage(input_zip, output_zip):
   if "selinux_fc" in OPTIONS.info_dict:
     WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
 
+  script.Print("")
+  script.Print("Format and Mount System, Mount Data...")
   script.FormatPartition("/system")
   script.Mount("/system")
-  #script.UnpackPackageDir("recovery", "/system")
+  script.Mount("/data")
   script.UnpackPackageDir("system", "/system")
+  script.UnpackPackageDir("data", "/data")
 
+  script.Print("Symlinks and permissions...")
   symlinks = CopySystemFiles(input_zip, output_zip)
   script.MakeSymlinks(symlinks)
 
@@ -444,6 +459,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.RunBackup("restore")
 
   script.ShowProgress(0.2, 10)
+  script.Print("Flashing Boot Image...")
   script.WriteRawImage("/boot", "boot.img")
 
   script.ShowProgress(0.1, 0)
@@ -563,7 +579,6 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   metadata["post-build"] = target_fp
 
   script.Mount("/system")
-  script.AssertSomeFingerprint(source_fp, target_fp)
 
   source_boot = common.GetBootableImage(
       "/tmp/boot.img", "boot.img", OPTIONS.source_tmp, "BOOT",
@@ -577,7 +592,7 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   #    OPTIONS.source_info_dict)
   #target_recovery = common.GetBootableImage(
   #    "/tmp/recovery.img", "recovery.img", OPTIONS.target_tmp, "RECOVERY")
-  updating_recovery = (source_recovery.data != target_recovery.data)
+  #updating_recovery = (source_recovery.data != target_recovery.data)
 
   # Here's how we divide up the progress bar:
   #  0.1 for verifying the start state (PatchCheck calls)
@@ -585,8 +600,6 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   #  0.1 for unpacking verbatim files, symlinking, and doing the
   #      device-specific commands.
 
-  AppendAssertions(script, OPTIONS.target_info_dict)
-  device_specific.IncrementalOTA_Assertions()
 
   script.Print("Verifying current system...")
 
@@ -785,8 +798,6 @@ def main(argv):
       OPTIONS.worker_threads = int(a)
     elif o in ("--backup"):
       OPTIONS.backuptool = bool(a.lower() == 'true')
-    elif o in ("--override_device"):
-      OPTIONS.override_device = a
     else:
       return False
     return True
@@ -802,7 +813,7 @@ def main(argv):
                                               "worker_threads=",
                                               "aslr_mode=",
                                               "backup=",
-                                              "override_device="],
+                                              ],
                              extra_option_handler=option_handler)
 
   if len(args) != 2:
@@ -817,6 +828,15 @@ def main(argv):
 
   OPTIONS.target_tmp = OPTIONS.input_tmp
   OPTIONS.info_dict = common.LoadInfoDict(input_zip)
+
+  # If this image was originally labelled with SELinux contexts, make sure we
+  # also apply the labels in our new image. During building, the "file_contexts"
+  # is in the out/ directory tree, but for repacking from target-files.zip it's
+  # in the root directory of the ramdisk.
+  if "selinux_fc" in OPTIONS.info_dict:
+    OPTIONS.info_dict["selinux_fc"] = os.path.join(OPTIONS.input_tmp, "BOOT", "RAMDISK",
+        "file_contexts")
+
   if OPTIONS.verbose:
     print "--- target info ---"
     common.DumpInfoDict(OPTIONS.info_dict)
