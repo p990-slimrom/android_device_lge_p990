@@ -3,21 +3,15 @@ import init.star.usb.rc
 on init
     export TMPDIR /data/local/tmp
 
-# create mountpoints for storage
-    mkdir /storage 0050 system sdcard_r
-    mkdir /storage/sdcard1 0000 system system
-
-    mkdir /mnt/shell/sdcard 0700 shell shell
-    mkdir /storage/sdcard 0555 root root
-
-    export EXTERNAL_STORAGE /storage/sdcard
+    export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
-
+    # create mountpoints for storage
+    mkdir /storage 0050 system sdcard_r
+    mkdir /storage/sdcard0 0000 system system
+    mkdir /storage/sdcard1 0000 system system
     # Support legacy paths
-    symlink /storage/sdcard /sdcard
-    symlink /storage/sdcard /mnt/sdcard
-    symlink /storage/sdcard /storage/sdcard0
-
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
 
 # Backward compatibility
     symlink /system/bin /bin
@@ -146,6 +140,18 @@ on boot
 ### End of LGE bluetooth
 
     chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
+
+    # Tegra specific cpufreq policy stuff
+    chown system system /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+    chown system system /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+    chown system system /sys/module/cpu_tegra/parameters/cpu_user_cap
+    chmod 0664 /sys/module/cpu_tegra/parameters/cpu_user_cap
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi

@@ -18,8 +18,6 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 ARCH_ARM_USE_NON_NEON_MEMCPY := true
 TARGET_BOOTLOADER_BOARD_NAME := p990
 
-HAVE_SELINUX := false 
-
 # filesystem
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -58,7 +56,9 @@ BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 # bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/p990/vnd_bt.txt
+BOARD_BLUEDROID_VENDOR_CONF := device/lge/p990/config/bluetooth/vnd_star.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/p990/config/bluetooth
+BOARD_BLUETOOTH_LIBBT_VNDCFG := device/lge/p990/config/bluetooth/bt_vendor.conf
 TARGET_NEEDS_BLUETOOTH_INIT_DELAY := true
 
 # audio
@@ -66,8 +66,7 @@ COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB
 TARGET_DONT_SET_AUDIO_AAC_FORMAT := true
 
 # camera
-COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB -DHAVE_ISO -DDISABLE_HW_ID_MATCH_CHECK
-BOARD_CAMERA_HAVE_ISO := true  
+COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
 
 # graphics
 BOARD_USE_SKIA_LCDTEXT := true
@@ -93,7 +92,12 @@ BOARD_MOBILEDATA_INTERFACE_NAME := "vsnet0"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
 BOARD_HAS_NO_SELECT_BUTTON := true
+TARGET_RECOVERY_FSTAB := device/lge/p990/fstab.p990
+RECOVERY_FSTAB_VERSION := 2
 
 # sensors
 BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
+
+# var
+TARGET_ARCH_LOWMEM := true

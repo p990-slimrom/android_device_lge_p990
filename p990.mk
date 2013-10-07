@@ -51,7 +51,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.sf.electron_frames=42 \
 	nv-camera-disable-early-graph=1 \
 	dalvik.vm.dexopt-data-only=1 \
-	sys.mem.max_hidden_apps=4 \
 	ro.lge.audio_soundexception=true \
 	ro.zram.default=18 \
 	persist.service.zram=18
@@ -93,7 +92,7 @@ PRODUCT_MANUFACTURER := LGE
 $(call inherit-product, device/common/gps/gps_eu.mk)
 
 # Inherit non-open-source blobs.
-$(call inherit-product-if-exists, vendor/lge/p990/p990-vendor.mk)
+$(call inherit-product, vendor/lge/p990/p990-vendor.mk)
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
@@ -107,20 +106,19 @@ PRODUCT_COPY_FILES += \
     $(foreach f,$(wildcard $(LOCAL_PATH)/prebuilt/res/images/security/*),$(f):root/res/images/security/$(notdir $(f)))
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/init.vsnet:system/bin/init.vsnet \
     $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
     $(LOCAL_PATH)/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
 
-# Camera Wrapper
-PRODUCT_PACKAGES += \
-    camerawrapper \
-    camera.tegra
+# Build kernel module instead of copying
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/check_sdcard.sh:system/bin/check_sdcard.sh \
     $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img
 
+# prebuilt kernel stuff
 LOCAL_KERNEL := device/lge/p990/kernel/zImage
 
 PRODUCT_COPY_FILES += \
