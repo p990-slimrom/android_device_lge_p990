@@ -3,6 +3,9 @@ TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
 
+# Use a smaller subset of system fonts to keep image size lower
+SMALLER_FONT_FOOTPRINT := true
+
 # CPU
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
