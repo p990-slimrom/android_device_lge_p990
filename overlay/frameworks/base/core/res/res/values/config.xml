@@ -80,6 +80,10 @@
         <item>0</item>
     </integer-array>
 
+    <integer name="config_buttonBrightnessSettingDefault">255</integer>
+    <integer name="config_keyboardBrightnessSettingDefault">0</integer>
+    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
+
     <string-array translatable="false" name="config_tether_usb_regexs">
     <item>"rndis0"</item>
     </string-array>
@@ -134,5 +138,12 @@
 
     <!-- Button illumination -->
     <bool name="config_deviceHasVariableButtonBrightness">true</bool>
+
+    <!-- True if the Irda service should be started at system start -->
+    <bool name="config_enableIrdaManagerService">false</bool>
+
+    <!-- The list of components which should be automatically disabled. -->
+    <string-array name="config_disabledComponents" translatable="false">
+    </string-array> 
 
 </resources>
