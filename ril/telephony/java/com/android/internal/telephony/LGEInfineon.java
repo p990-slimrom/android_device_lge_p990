@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Message;
 import android.os.Parcel;
+import android.os.SystemService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,9 +104,26 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         return data;
     }
 
+    private void restartRild() {
+        setRadioState(RadioState.RADIO_UNAVAILABLE);
+        SystemService.stop("ril-daemon");
+        RILRequest.resetSerial();
+
+        // Clear request list
+        clearRequestList(RADIO_NOT_AVAILABLE, false);
+        // Thread sleeps are ususally a terrible idea, but we do want the radio
+        // stack to back off for a bit
+        SystemService.start("ril-daemon");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ie) {}
+        setRadioState(RadioState.RADIO_ON);
+    }
+
     static final int RIL_UNSOL_LGE_SIM_STATE_CHANGED = 1060;
     static final int RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW = 1061;
     static final int RIL_UNSOL_LGE_XCALLSTAT = 1052;
+    static final int RIL_UNSOL_LGE_RESTART_RILD = 1054;
     static final int RIL_UNSOL_LGE_UNSOL = 1080;
     static final int RIL_REQUEST_LGE_SET_CPATH = 252;
 
@@ -181,6 +199,7 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         switch(response) {
             case RIL_UNSOL_ON_USSD: ret =  responseStrings(p); break;
             case RIL_UNSOL_LGE_UNSOL: ret =  responseVoid(p); break; // RIL_UNSOL_LGE_FACTORY_READY
+            case RIL_UNSOL_LGE_RESTART_RILD: ret =  responseVoid(p); break;
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED:
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW: ret =  responseVoid(p); break;
             case RIL_UNSOL_NITZ_TIME_RECEIVED: ret =  responseNitz(p); break;
@@ -224,6 +243,9 @@ public class LGEInfineon extends RIL implements CommandsInterface {
             	if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])) {
             		RIL_REQUEST_HANG_UP_CALL = 206;
             	}
+                break;
+            case RIL_UNSOL_LGE_RESTART_RILD:
+                restartRild();
                 break;
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED:
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW:
