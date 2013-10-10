@@ -81,11 +81,6 @@ PRODUCT_PACKAGES += \
 # Enable Torch
 PRODUCT_PACKAGES += Torch
 
-# Camera Wrapper
-PRODUCT_PACKAGES += \
-    camerawrapper \
-    camera.tegra
-
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp,adb
