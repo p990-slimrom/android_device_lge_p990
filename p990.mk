@@ -98,7 +98,7 @@ $(call inherit-product, vendor/lge/p990/p990-vendor.mk)
 PRODUCT_COPY_FILES += \
     device/lge/p990/init.p990.rc:root/init.star.rc \
     $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
-    $(LOCAL_PATH)/fstab.p990:root/fstab.p990
+    $(LOCAL_PATH)/fstab.star:root/fstab.star
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/charger:root/charger \

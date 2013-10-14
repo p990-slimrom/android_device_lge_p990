@@ -5,7 +5,7 @@ on early-init
 
 on fs
 # mount partitions
-    mount_all /fstab.p990
+    mount_all /fstab.star
 
 on post-fs
 ## LGE

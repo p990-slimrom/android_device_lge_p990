@@ -95,7 +95,7 @@ BOARD_MOBILEDATA_INTERFACE_NAME := "vsnet0"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_FSTAB := device/lge/p990/fstab.p990
+TARGET_RECOVERY_FSTAB := device/lge/p990/fstab.star
 RECOVERY_FSTAB_VERSION := 2
 
 # sensors
