@@ -82,11 +82,15 @@ PRODUCT_PACKAGES += \
     libemoji \
     screencap \
     audio.a2dp.default \
+    audio.usb.default \
     hwcomposer.default \
     com.android.future.usb.accessory
 
 # Enable Torch
 PRODUCT_PACKAGES += Torch
+
+PRODUCT_PACKAGES += \
+    libnetcmdiface
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
