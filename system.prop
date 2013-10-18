@@ -6,6 +6,9 @@ rild.libargs=-d /dev/ttyspi0
 
 mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
 
+ro.sf.lcd_density=240
+#ro.sf.hw_lcd_density=220
+
 # hold precise GC data, and use SMP
 dalvik.vm.dexopt-flags=m=y,u=n,v=n,o=v
 
