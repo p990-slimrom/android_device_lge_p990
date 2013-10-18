@@ -75,6 +75,7 @@ PRODUCT_PACKAGES += \
     libbridge_jni \
     screencap \
     audio.a2dp.default \
+    audio.usb.default \
     hwcomposer.default \
     com.android.future.usb.accessory
 
@@ -85,6 +86,10 @@ PRODUCT_PACKAGES += Torch
 PRODUCT_PACKAGES += \
     camerawrapper \
     camera.tegra
+
+#wlan
+PRODUCT_PACKAGES += \
+    libnetcmdiface
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
