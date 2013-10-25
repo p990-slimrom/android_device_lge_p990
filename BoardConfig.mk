@@ -107,3 +107,5 @@ BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
 
 # var
 TARGET_ARCH_LOWMEM := true
+HAVE_SELINUX := false
+
