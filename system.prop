@@ -9,11 +9,23 @@ mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
 ro.sf.lcd_density=240
 #ro.sf.hw_lcd_density=220
 
-# hold precise GC data, and use SMP
-dalvik.vm.dexopt-flags=m=y,u=n,v=n,o=v
+# Dalvik options
+dalvik.vm.debug.alloc=0
+dalvik.vm.checkjni=false
+dalvik.vm.dexopt-data-only=1
+dalvik.vm.dexopt-flags=v=a,o=v,m=y,u=y
+#dalvik.vm.dexopt-flags=v=n,o=v,m=y,u=n
+dalvik.vm.execution-mode=int:jit
+dalvik.vm.heapstartsize=5m
+dalvik.vm.heapgrowthlimit=54m
+dalvik.vm.heapsize=54m
+dalvik.vm.heaptargetutilization=0.25
+dalvik.vm.heapminfree=512k
+dalvik.vm.heapmaxfree=2m
 
-# disable dalvik logspam
-dalvik.vm.debug.alloc=0 
+persist.sys.purgeable_assets=1
+wifi.supplicant_scan_interval=180
+windowsmgr.max_events_per_sec=90
 
 ro.bq.gpu_to_cpu_unsupported=1 
 
