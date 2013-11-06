@@ -55,9 +55,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.zram.default=18 \
 	persist.service.zram=18
 
-$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
-
 $(call inherit-product, build/target/product/full_base_telephony.mk)
+
+$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 PRODUCT_LOCALES += hdpi
 
@@ -81,11 +81,6 @@ PRODUCT_PACKAGES += \
 
 # Enable Torch
 PRODUCT_PACKAGES += Torch
-
-# Camera Wrapper
-PRODUCT_PACKAGES += \
-    camerawrapper \
-    camera.tegra
 
 #wlan
 PRODUCT_PACKAGES += \
