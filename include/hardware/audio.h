@@ -366,6 +366,81 @@ struct audio_stream_out {
 #endif
 #endif
 
+    /**
+     * set the callback function for notifying completion of non-blocking
+     * write and drain.
+     * Calling this function implies that all future write() and drain()
+     * must be non-blocking and use the callback to signal completion.
+     */
+    int (*set_callback)(struct audio_stream_out *stream,
+            stream_callback_t callback, void *cookie);
+
+
+    /**
+     * Notifies to the audio driver to stop playback however the queued buffers are
+     * retained by the hardware. Useful for implementing pause/resume. Empty implementation
+     * if not supported however should be implemented for hardware with non-trivial
+     * latency. In the pause state audio hardware could still be using power. User may
+     * consider calling suspend after a timeout.
+     *
+     * Implementation of this function is mandatory for offloaded playback.
+     */
+    int (*pause)(struct audio_stream_out* stream);
+
+    /**
+     * Notifies to the audio driver to resume playback following a pause.
+     * Returns error if called without matching pause.
+     *
+     * Implementation of this function is mandatory for offloaded playback.
+     */
+    int (*resume)(struct audio_stream_out* stream);
+
+    /**
+     * Requests notification when data buffered by the driver/hardware has
+     * been played. If set_callback() has previously been called to enable
+     * non-blocking mode, the drain() must not block, instead it should return
+     * quickly and completion of the drain is notified through the callback.
+     * If set_callback() has not been called, the drain() must block until
+     * completion.
+     * If type==AUDIO_DRAIN_ALL, the drain completes when all previously written
+     * data has been played.
+     * If type==AUDIO_DRAIN_EARLY_NOTIFY, the drain completes shortly before all
+     * data for the current track has played to allow time for the framework
+     * to perform a gapless track switch.
+     *
+     * Drain must return immediately on stop() and flush() call
+     *
+     * Implementation of this function is mandatory for offloaded playback.
+     */
+    int (*drain)(struct audio_stream_out* stream, audio_drain_type_t type );
+
+    /**
+     * Notifies to the audio driver to flush the queued data. Stream must already
+     * be paused before calling flush().
+     *
+     * Implementation of this function is mandatory for offloaded playback.
+     */
+   int (*flush)(struct audio_stream_out* stream);
+
+    /**
+     * Return a recent count of the number of audio frames presented to an external observer.
+     * This excludes frames which have been written but are still in the pipeline.
+     * The count is not reset to zero when output enters standby.
+     * Also returns the value of CLOCK_MONOTONIC as of this presentation count.
+     * The returned count is expected to be 'recent',
+     * but does not need to be the most recent possible value.
+     * However, the associated time should correspond to whatever count is returned.
+     * Example:  assume that N+M frames have been presented, where M is a 'small' number.
+     * Then it is permissible to return N instead of N+M,
+     * and the timestamp should correspond to N rather than N+M.
+     * The terms 'recent' and 'small' are not defined.
+     * They reflect the quality of the implementation.
+     *
+     * 3.0 and higher only.
+     */
+    int (*get_presentation_position)(const struct audio_stream_out *stream,
+                               uint64_t *frames, struct timespec *timestamp);
+
 };
 typedef struct audio_stream_out audio_stream_out_t;
 
