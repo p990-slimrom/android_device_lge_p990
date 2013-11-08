@@ -39,7 +39,7 @@ on post-fs
 # 20100716 mingi.sung@lge.com <make wifi directory> [START]
 # WIFI
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    setprop wifi.supplicant_scan_interval 20
+    setprop wifi.supplicant_scan_interval 180
     setprop wifi.interface wlan0
 # DHCP
     mkdir /data/misc/dhcp 0777 system system
