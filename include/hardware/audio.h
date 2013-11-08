@@ -158,6 +158,7 @@ struct audio_config {
     uint32_t sample_rate;
     audio_channel_mask_t channel_mask;
     audio_format_t  format;
+    audio_offload_info_t offload_info;
 };
 
 typedef struct audio_config audio_config_t;
@@ -255,6 +256,22 @@ struct audio_stream {
                              effect_handle_t effect);
 };
 typedef struct audio_stream audio_stream_t;
+
+/* type of asynchronous write callback events. Mutually exclusive */
+typedef enum {
+    STREAM_CBK_EVENT_WRITE_READY, /* non blocking write completed */
+    STREAM_CBK_EVENT_DRAIN_READY  /* drain completed */
+} stream_callback_event_t;
+
+typedef int (*stream_callback_t)(stream_callback_event_t event, void *param, void *cookie);
+
+/* type of drain requested to audio_stream_out->drain(). Mutually exclusive */
+typedef enum {
+    AUDIO_DRAIN_ALL,            /* drain() returns when all data has been played */
+    AUDIO_DRAIN_EARLY_NOTIFY    /* drain() returns a short time before all data
+                                   from the current track has been played to
+                                   give time for gapless track switch */
+} audio_drain_type_t;
 
 /**
  * audio_stream_out is the abstraction interface for the audio output hardware.
