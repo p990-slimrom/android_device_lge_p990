@@ -2,6 +2,7 @@ LOCAL_PATH := device/lge/p990
 TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
+BOARD_HARDWARE_CLASS := device/lge/p990/cmhw/
 
 # CPU
 TARGET_ARCH := arm
