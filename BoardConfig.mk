@@ -79,9 +79,15 @@ BOARD_USE_SKIA_LCDTEXT := true
 USE_OPENGL_RENDERER := true
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 
+# Fix Graphics Issues
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.zygote.disable_gl_preload=true \
+  ro.bq.gpu_to_cpu_unsupported=true
+
 # egl
 BOARD_EGL_CFG := device/lge/p990/egl.cfg
-BOARD_EGL_NEEDS_LEGACY_FB := true
+#BOARD_EGL_NEEDS_LEGACY_FB := true
+EGL_NEEDS_FNW := true
 
 # fm
 #BOARD_HAVE_FM_RADIO := true
