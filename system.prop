@@ -27,7 +27,11 @@ persist.sys.purgeable_assets=1
 wifi.supplicant_scan_interval=180
 windowsmgr.max_events_per_sec=90
 
-ro.bq.gpu_to_cpu_unsupported=1 
+# cm 11 bootloop fix
+ro.zygote.disable_gl_preload=1
+ro.bq.gpu_to_cpu_unsupported=1
+debug.hwui.render_dirty_regions=false
+
 
 # GSM, WCDMA preferred
 # This appears to be causing "Unknown" network type
