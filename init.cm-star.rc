@@ -3,15 +3,19 @@ import init.star.usb.rc
 on init
     export TMPDIR /data/local/tmp
 
+    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+    mkdir /storage/sdcard0 0700 root root
+
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    mkdir /storage/sdcard1 0700 root root
+
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
-    # create mountpoints for storage
-    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    
+
     # Support legacy paths
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard0 /storage/sdcard
 
 # Backward compatibility
     symlink /system/bin /bin
@@ -32,6 +36,7 @@ on early-init
     write /sys/class/firmware/timeout 5
 
 on fs
+
 on post-fs
 
     chmod 0777 /data/misc/wifi/config_mac       # 20101202 mingi.sung@lge.com [WLAN] AT command - MAC address read/write function
@@ -255,10 +260,10 @@ service vsnet2_down /system/bin/init.vsnet-down 2
    disabled
    oneshot
 
-service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
+service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
     class late_start
     disabled
 
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
     class late_start
     disabled
