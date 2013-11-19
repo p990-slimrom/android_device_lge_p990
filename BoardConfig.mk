@@ -6,6 +6,8 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-n
 # Use a smaller subset of system fonts to keep image size lower
 SMALLER_FONT_FOOTPRINT := true
 
+USE_SET_METADATA := false
+
 # CPU
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
