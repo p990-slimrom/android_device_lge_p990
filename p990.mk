@@ -105,6 +105,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
     $(LOCAL_PATH)/fstab.star:root/fstab.star
 
+# TWRP
+PRODUCT_COPY_FILES += \
+    device/lge/p990/twrp.fstab:recovery/root/etc/twrp.fstab
+
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/charger:root/charger \
     $(foreach f,$(wildcard $(LOCAL_PATH)/prebuilt/res/images/charger/*),$(f):root/res/images/charger/$(notdir $(f))) \
