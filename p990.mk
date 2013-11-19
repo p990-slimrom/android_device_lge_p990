@@ -111,6 +111,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
     $(LOCAL_PATH)/fstab.star:root/fstab.star
 
+# TWRP
+PRODUCT_COPY_FILES += \
+    device/lge/p990/twrp.fstab:recovery/root/etc/twrp.fstab
+
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.boot.selinux=disabled \
     ro.build.selinux=0
