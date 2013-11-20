@@ -12,7 +12,7 @@
 /dev/block/mmcblk0p8                           /recovery         emmc    defaults                                                     recoveryonly
 # internal sd
 /dev/block/mmcblk0p11                          /sdcard           vfat    defaults                                                     recoveryonly
-/devices/platform/sdhci-tegra.3/mmc_host/mmc0  /storage/sdcard0  auto    defaults                                                     voldmanaged=emmc:11,nonremovable
+/devices/platform/sdhci-tegra.3/mmc_host/mmc0  auto              auto    defaults                                                     voldmanaged=sdcard0:11,nonremovable,noemulatedsd
 # external sd
 /dev/block/mmcblk1p1                           /external_sd      vfat    defaults                                                     recoveryonly
-/devices/platform/sdhci-tegra.2/mmc_host/mmc1  /storage/sdcard1  auto    defaults                                                     voldmanaged=sdcard:auto
+/devices/platform/sdhci-tegra.2/mmc_host/mmc1  auto              auto    defaults                                                     voldmanaged=sdcard1:auto,noemulatedsd

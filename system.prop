@@ -13,8 +13,6 @@ dalvik.vm.dexopt-flags=m=y,u=n,v=n,o=v
 # disable dalvik logspam
 dalvik.vm.debug.alloc=0
 
-ro.bq.gpu_to_cpu_unsupported=1
-
 # GSM, WCDMA preferred
 # This appears to be causing "Unknown" network type
 #ro.telephony.default_network=0

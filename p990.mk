@@ -42,12 +42,18 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.opengles.version=196608 \
-        ro.telephony.call_ring.multiple=false \
-        ro.telephony.call_ring.delay=3000 \
-        ro.telephony.call_ring.absent=true \
-        ro.hardware.respect_als=true \
-        ro.bt.bdaddr_path=/sys/devices/platform/bd_address/bdaddr_if \
+    ro.zygote.disable_gl_preload=true \
+    ro.bq.gpu_to_cpu_unsupported=1 \
+    debug.hwui.render_dirty_regions=false \
+    sys.disable_ext_animation=1 \
+    ro.config.low_ram=true \
+    dalvik.vm.jit.codecachesize=0 \
+    ro.opengles.version=196608 \
+    ro.telephony.call_ring.multiple=false \
+    ro.telephony.call_ring.delay=3000 \
+    ro.telephony.call_ring.absent=true \
+    ro.hardware.respect_als=true \
+    ro.bt.bdaddr_path=/sys/devices/platform/bd_address/bdaddr_if \
 	debug.sf.electron_frames=42 \
 	nv-camera-disable-early-graph=1 \
 	dalvik.vm.dexopt-data-only=1 \
@@ -73,6 +79,7 @@ PRODUCT_PACKAGES += \
     lights.star \
     libbridge \
     libbridge_jni \
+    libemoji \
     screencap \
     audio.a2dp.default \
     hwcomposer.default \
@@ -99,6 +106,10 @@ PRODUCT_COPY_FILES += \
     device/lge/p990/init.p990.rc:root/init.star.rc \
     $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
     $(LOCAL_PATH)/fstab.star:root/fstab.star
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.boot.selinux=disabled \
+    ro.build.selinux=0
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/charger:root/charger \
