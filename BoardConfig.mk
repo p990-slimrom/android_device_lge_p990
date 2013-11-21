@@ -1,7 +1,7 @@
 LOCAL_PATH := device/lge/p990
 TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
+#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
 
 # Use a smaller subset of system fonts to keep image size lower
 SMALLER_FONT_FOOTPRINT := true
@@ -49,17 +49,29 @@ BOARD_PAGE_SIZE := 0x00000800
 TARGET_PREBUILT_KERNEL := device/lge/p990/kernel/zImage
 
 # wifi
-BOARD_WLAN_DEVICE := bcm4329
-WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
-WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
-WIFI_DRIVER_MODULE_NAME         := "wireless"
-WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko"
-WIFI_DRIVER_MODULE_ARG          := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
-WPA_SUPPLICANT_VERSION          := VER_0_8_X
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wext
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-WIFI_DRIVER_HAS_LGE_SOFTAP      := true
-BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+WPA_SUPPLICANT_VERSION      := VER_0_8_X
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_DRIVER        := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
+BOARD_WLAN_DEVICE           := bcmdhd
+#WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4329.ko"
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/bcm4329/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin"
+WIFI_DRIVER_FW_PATH_P2P     := "/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin"
+
+#BOARD_WLAN_DEVICE := bcm4329
+#WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
+#WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
+#WIFI_DRIVER_MODULE_NAME         := "wireless"
+#WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko"
+#WIFI_DRIVER_MODULE_ARG          := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
+#WPA_SUPPLICANT_VERSION          := VER_0_8_X
+#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wext
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
+#WIFI_DRIVER_HAS_LGE_SOFTAP      := true
+#BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 
 # bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -72,9 +84,12 @@ TARGET_NEEDS_BLUETOOTH_INIT_DELAY := true
 # audio
 COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB 
 TARGET_DONT_SET_AUDIO_AAC_FORMAT := true
+BOARD_HAVE_PRE_KITKAT_AUDIO_BLOB := true
 
 # camera
 COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
+
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # graphics
 BOARD_USE_SKIA_LCDTEXT := true
@@ -89,7 +104,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # egl
 BOARD_EGL_CFG := device/lge/p990/egl.cfg
 #BOARD_EGL_NEEDS_LEGACY_FB := true
-EGL_NEEDS_FNW := true
+BOARD_EGL_NEEDS_FNW := true
+BOARD_USE_MHEAP_SCREENSHOT := true
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
 
 # fm
 #BOARD_HAVE_FM_RADIO := true
@@ -125,3 +142,8 @@ TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+
+# low memory
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.config.low_ram=true \
+  dalvik.vm.jit.codecachesize=0
