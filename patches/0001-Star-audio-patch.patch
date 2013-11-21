@@ -1,0 +1,66 @@
+From c54aee0a475ef1d1347fd4466994b1c8edfec3ab Mon Sep 17 00:00:00 2001
+From: hjunii <hjunii@gmail.com>
+Date: Fri, 28 Feb 2014 17:43:02 +0900
+Subject: [PATCH 1/1] Star audio patch
+
+Change-Id: Ib0e3fe12e84355469128e6df14b9bb92ca7080b9
+---
+ include/hardware/audio.h | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/include/hardware/audio.h b/include/hardware/audio.h
+index 1ec6c5a..0be9712 100644
+--- a/include/hardware/audio.h
++++ b/include/hardware/audio.h
+@@ -349,6 +349,13 @@ struct audio_stream_out {
+     int (*get_render_position)(const struct audio_stream_out *stream,
+                                uint32_t *dsp_frames);
+ 
++    /**
++     * get the local time at which the next write to the audio driver will be presented.
++     * The units are microseconds, where the epoch is decided by the local audio HAL.
++     */
++    int (*get_next_write_timestamp)(const struct audio_stream_out *stream,
++                                    int64_t *timestamp);
++
+ #ifndef ICS_AUDIO_BLOB
+ #ifdef QCOM_DIRECTTRACK
+     /**
+@@ -360,7 +367,6 @@ struct audio_stream_out {
+      * stop audio data rendering
+      */
+     int (*stop)(struct audio_stream_out *stream);
+-#endif
+ 
+     /**
+      * get the local time at which the next write to the audio driver will be presented.
+@@ -368,6 +374,8 @@ struct audio_stream_out {
+      */
+     int (*get_next_write_timestamp)(const struct audio_stream_out *stream,
+                                     int64_t *timestamp);
++#endif
++#endif
+ 
+     /**
+      * set the callback function for notifying completion of non-blocking
+@@ -442,7 +450,7 @@ struct audio_stream_out {
+      */
+     int (*get_presentation_position)(const struct audio_stream_out *stream,
+                                uint64_t *frames, struct timespec *timestamp);
+-#endif
++
+ #ifdef QCOM_DIRECTTRACK
+     /**
+     * return the current timestamp after quering to the driver
+@@ -634,6 +642,8 @@ struct audio_hw_device {
+      * playing, and AUDIO_MODE_IN_CALL when a call is in progress.
+      */
+     int (*set_mode)(struct audio_hw_device *dev, audio_mode_t mode);
++    int (*dummy1)();
++    int (*dummy2)();
+ 
+     /* mic mute */
+     int (*set_mic_mute)(struct audio_hw_device *dev, bool state);
+-- 
+1.8.3.2
+
