@@ -144,7 +144,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     lgcpversion
 
-#include gapps
+#include gapps and Enable mini gapps
+MINI_GAPPS := true
 $(call inherit-product, vendor/google/tiny_gapps_nonneon_tonyp.mk)
 
 PRODUCT_NAME := full_p990
