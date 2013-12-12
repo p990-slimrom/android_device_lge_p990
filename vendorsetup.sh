@@ -27,6 +27,7 @@ echo -n "Apply patch 0001-framework-base-patch.patch"
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
+	(cd frameworks/base; git am --abort)
 	echo "     [FAIL]"
 fi
 
@@ -36,6 +37,7 @@ echo -n "Apply patch 0001-framework-native-fix.patch"
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
+	(cd frameworks/native; git am --abort)
 	echo "     [FAIL]"
 fi
 echo -n "Apply patch 0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch"
@@ -43,6 +45,7 @@ echo -n "Apply patch 0002-DisplayDevice-Backwards-compatibility-with-old-EGL.pat
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
+	(cd frameworks/native; git am --abort)
 	echo "     [FAIL]"
 fi
 echo -n "Apply patch 0003-libgui-Bring-back-support-for-mHeap-based-screenshot.patch"
@@ -50,23 +53,26 @@ echo -n "Apply patch 0003-libgui-Bring-back-support-for-mHeap-based-screenshot.p
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
+	(cd frameworks/native; git am --abort)
 	echo "     [FAIL]"
 fi
 
 echo "Apply patch to frameworks/av"
-echo -n "0001-ifdef-for-ICS-Audio-Blob-compatibility.patch"
+echo -n "Apply patch 0001-ifdef-for-ICS-Audio-Blob-compatibility.patch"
 (cd frameworks/av; git am ../../device/lge/p990/patches/0001-ifdef-for-ICS-Audio-Blob-compatibility.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
+	(cd frameworks/av; git am --abort)
 	echo "     [FAIL]"
 fi
 
-echo -n "0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch"
+echo -n "Apply patch 0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch"
 (cd frameworks/av; git am ../../device/lge/p990/patches/0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch) > /dev/null 2>&1
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
+	(cd frameworks/av; git am --abort)
 	echo "     [FAIL]"
 fi
 
