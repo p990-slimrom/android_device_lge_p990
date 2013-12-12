@@ -147,3 +147,6 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.config.low_ram=true \
   dalvik.vm.jit.codecachesize=0
+
+# Avoid the generation of ldrcc instructions
+NEED_WORKAROUND_CORTEX_A9_745320 := true
