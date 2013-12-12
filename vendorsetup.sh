@@ -62,3 +62,11 @@ else
 	echo "     [FAIL]"
 fi
 
+echo -n "0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch"
+(cd frameworks/av; git am ../../device/lge/p990/patches/0002-Add-missing-functions-and-signatures-for-older-OMX-v.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+	echo "     [DONE]"
+else
+	echo "     [FAIL]"
+fi
+
