@@ -53,7 +53,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	dalvik.vm.dexopt-data-only=1 \
 	ro.lge.audio_soundexception=true \
 	ro.zram.default=18 \
-	persist.service.zram=18
+	persist.service.zram=18 \
+        drm.service.enabled=true
 
 $(call inherit-product, build/target/product/full_base_telephony.mk)
 
@@ -83,8 +84,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += Torch
 
 #wlan
-PRODUCT_PACKAGES += \
-    libnetcmdiface
+#PRODUCT_PACKAGES += \
+#    libnetcmdiface
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
