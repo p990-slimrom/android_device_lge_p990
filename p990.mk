@@ -1,5 +1,8 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
+TARGET_SCREEN_HEIGHT := 800
+TARGET_SCREEN_WIDTH := 480
+
 # Board-specific init
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init_recovery.rc:root/init_recovery.rc \
