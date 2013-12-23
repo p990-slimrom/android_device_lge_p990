@@ -1,4 +1,4 @@
-From 0181b764272c8c9a8f878913eeead243a8dde6da Mon Sep 17 00:00:00 2001
+From 3764878c38d96ce0252dfeae5ca6c8062251f4c9 Mon Sep 17 00:00:00 2001
 From: Ricardo Cerqueira <cyanogenmod@cerqueira.org>
 Date: Tue, 6 Aug 2013 16:11:06 +0100
 Subject: [PATCH 1/1] libgui: Bring back support for mHeap-based screenshots
@@ -79,11 +79,11 @@ index 90d3dcd..425c111 100644
      mutable sp<BufferQueue> mBufferQueue;
      CpuConsumer::LockedBuffer mBuffer;
 diff --git a/libs/gui/Android.mk b/libs/gui/Android.mk
-index 14bf33a..9e49292 100644
+index 7957981..356ffd2 100644
 --- a/libs/gui/Android.mk
 +++ b/libs/gui/Android.mk
-@@ -49,6 +49,10 @@ endif
-     LOCAL_CFLAGS += -DQCOM_BSP
+@@ -53,6 +53,10 @@ ifeq ($(BOARD_EGL_SKIP_FIRST_DEQUEUE),true)
+     LOCAL_CFLAGS += -DSURFACE_SKIP_FIRST_DEQUEUE
  endif
  
 +ifeq ($(BOARD_USE_MHEAP_SCREENSHOT),true)
@@ -232,7 +232,7 @@ index 66b4575..d65b9f2 100644
  ifneq ($(VSYNC_EVENT_PHASE_OFFSET_NS),)
      LOCAL_CFLAGS += -DVSYNC_EVENT_PHASE_OFFSET_NS=$(VSYNC_EVENT_PHASE_OFFSET_NS)
 diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
-index 673a198..822130b 100644
+index 67b715c..e1f5ce5 100644
 --- a/services/surfaceflinger/SurfaceFlinger.cpp
 +++ b/services/surfaceflinger/SurfaceFlinger.cpp
 @@ -23,6 +23,9 @@
@@ -245,7 +245,7 @@ index 673a198..822130b 100644
  
  #include <cutils/log.h>
  #include <cutils/properties.h>
-@@ -2771,6 +2774,9 @@ status_t SurfaceFlinger::onTransact(
+@@ -2778,6 +2781,9 @@ status_t SurfaceFlinger::onTransact(
              const int pid = ipc->getCallingPid();
              const int uid = ipc->getCallingUid();
              if ((uid != AID_GRAPHICS) &&
@@ -255,7 +255,7 @@ index 673a198..822130b 100644
                      !PermissionCache::checkPermission(sAccessSurfaceFlinger, pid, uid)) {
                  ALOGE("Permission Denial: "
                          "can't access SurfaceFlinger pid=%d, uid=%d", pid, uid);
-@@ -2779,6 +2785,9 @@ status_t SurfaceFlinger::onTransact(
+@@ -2786,6 +2792,9 @@ status_t SurfaceFlinger::onTransact(
              break;
          }
          case CAPTURE_SCREEN:
@@ -265,7 +265,7 @@ index 673a198..822130b 100644
          {
              // codes that require permission check
              IPCThreadState* ipc = IPCThreadState::self();
-@@ -3022,9 +3031,18 @@ status_t SurfaceFlinger::captureScreen(const sp<IBinder>& display,
+@@ -3029,9 +3038,18 @@ status_t SurfaceFlinger::captureScreen(const sp<IBinder>& display,
              Mutex::Autolock _l(flinger->mStateLock);
              sp<const DisplayDevice> hw(flinger->getDisplayDevice(display));
              bool useReadPixels = this->useReadPixels && !flinger->mGpuToCpuSupported;
@@ -287,7 +287,7 @@ index 673a198..822130b 100644
              static_cast<GraphicProducerWrapper*>(producer->asBinder().get())->exit(result);
              return true;
          }
-@@ -3250,6 +3268,108 @@ void SurfaceFlinger::checkScreenshot(size_t w, size_t s, size_t h, void const* v
+@@ -3257,6 +3275,108 @@ void SurfaceFlinger::checkScreenshot(size_t w, size_t s, size_t h, void const* v
      }
  }
  
@@ -396,7 +396,7 @@ index 673a198..822130b 100644
  // ---------------------------------------------------------------------------
  
  SurfaceFlinger::LayerVector::LayerVector() {
-@@ -3296,6 +3416,7 @@ SurfaceFlinger::DisplayDeviceState::DisplayDeviceState(DisplayDevice::DisplayTyp
+@@ -3303,6 +3423,7 @@ SurfaceFlinger::DisplayDeviceState::DisplayDeviceState(DisplayDevice::DisplayTyp
  }; // namespace android
  
  
@@ -404,13 +404,13 @@ index 673a198..822130b 100644
  #if defined(__gl_h_)
  #error "don't include gl/gl.h in this file"
  #endif
-@@ -3303,3 +3424,4 @@ SurfaceFlinger::DisplayDeviceState::DisplayDeviceState(DisplayDevice::DisplayTyp
+@@ -3310,3 +3431,4 @@ SurfaceFlinger::DisplayDeviceState::DisplayDeviceState(DisplayDevice::DisplayTyp
  #if defined(__gl2_h_)
  #error "don't include gl2/gl2.h in this file"
  #endif
 +#endif
 diff --git a/services/surfaceflinger/SurfaceFlinger.h b/services/surfaceflinger/SurfaceFlinger.h
-index 12b07ef..7f536cb 100644
+index 8c28962..ada2914 100644
 --- a/services/surfaceflinger/SurfaceFlinger.h
 +++ b/services/surfaceflinger/SurfaceFlinger.h
 @@ -208,6 +208,11 @@ private:
