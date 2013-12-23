@@ -139,8 +139,6 @@ LOCAL_KERNEL := device/lge/p990/kernel/zImage
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
     $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko \
-    $(LOCAL_PATH)/kernel/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/kernel/wireless.ko:system/lib/modules/wireless.ko \
     $(LOCAL_PATH)/kernel/zram.ko:system/lib/modules/zram.ko
 
 PRODUCT_COPY_FILES += \
