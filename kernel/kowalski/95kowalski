@@ -1,8 +1,5 @@
 #!/system/bin/sh
 
-# Enable the ZRAM kernel module
-insmod /system/lib/modules/zram.ko
-
 mkdir /dev/cpuctl
 mount -t cgroup -o cpu none /dev/cpuctl
 
@@ -24,4 +21,5 @@ mkdir /dev/timer_group
 mount -t cgroup -o timer_slack none /dev/timer_group
 
 mkdir /dev/timer_group/bg
-echo 500000000 > /dev/timer_group/bg/timer_slack.min_slack_ns
+echo 100000000 > /dev/timer_group/bg/timer_slack.min_slack_ns
+
