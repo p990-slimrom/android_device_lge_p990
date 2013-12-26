@@ -162,6 +162,10 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/cpu_user_cap
     chmod 0664 /sys/module/cpu_tegra/parameters/cpu_user_cap
 
+# Default Read Ahead value for sdcards
+    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+    write /sys/block/mmcblk1/queue/read_ahead_kb 2048
+
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
