@@ -150,3 +150,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
+
+BOARD_HARDWARE_CLASS := device/lge/p990/cmhw/
