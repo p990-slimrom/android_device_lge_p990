@@ -107,3 +107,23 @@ BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
 TARGET_ARCH_LOWMEM := true
 HAVE_SELINUX := false
 
+#BOARD_SEPOLICY_DIRS := \
+#        device/lge/p990/sepolicy
+
+#BOARD_SEPOLICY_UNION := \
+#        file_contexts \
+#        genfs_contexts \
+#        app.te \
+#        btmacreader.te \
+#        device.te \
+#        drmserver.te \
+#        file.te \
+#        gpsd.te \
+#        init_shell.te \
+#        keystore.te \
+#        mediaserver.te \
+#        rild.te \
+#        sensors_config.te \
+#        surfaceflinger.te \
+#        system.te \
+#        zygote.te
