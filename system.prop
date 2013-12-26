@@ -6,8 +6,8 @@ rild.libargs=-d /dev/ttyspi0
 
 mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
 
-ro.sf.lcd_density=240
-#ro.sf.hw_lcd_density=220
+# set default lcd density to TVDPI
+ro.sf.lcd_density=213
 
 # Dalvik options
 dalvik.vm.debug.alloc=0
