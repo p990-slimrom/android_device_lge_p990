@@ -7,9 +7,6 @@ BOARD_HARDWARE_CLASS := device/lge/p990/cmhw/
 # Use a smaller subset of system fonts to keep image size lower
 SMALLER_FONT_FOOTPRINT := true
 
-PRODUCT_AAPT_CONFIG := normal large tvdpi hdpi
-PRODUCT_AAPT_PREF_CONFIG := tvdpi
-
 # CPU
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
