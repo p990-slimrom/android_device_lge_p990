@@ -1,4 +1,4 @@
-From 96f4eeb03320ba6b283d5eef99d2060467f9fe57 Mon Sep 17 00:00:00 2001
+From b4460ad608b3cf8ad4b2cd159ba640b51c8347d4 Mon Sep 17 00:00:00 2001
 From: hjunii <hjunii@gmail.com>
 Date: Thu, 12 Dec 2013 17:38:40 +0900
 Subject: [PATCH 1/1] Add missing functions and signatures for older OMX video
@@ -15,7 +15,7 @@ Change-Id: I0de990ee22e4f4c72c5cbb1f7fd96b899d3ecbee
  3 files changed, 72 insertions(+), 8 deletions(-)
 
 diff --git a/include/media/AudioTrack.h b/include/media/AudioTrack.h
-index 16ba742..67b5e88 100644
+index feafa0d..5ee20f6 100644
 --- a/include/media/AudioTrack.h
 +++ b/include/media/AudioTrack.h
 @@ -228,6 +228,18 @@ public:
@@ -47,7 +47,7 @@ index 16ba742..67b5e88 100644
      /* Returns this track's estimated latency in milliseconds.
       * This includes the latency due to AudioTrack buffer size, AudioMixer (if any)
 @@ -279,23 +291,23 @@ public:
- #ifdef QCOM_HARDWARE
+ #ifdef QCOM_DIRECTTRACK
              uint32_t    latency() const;
  #else
 -            uint32_t    latency() const     { return mLatency; }
@@ -86,7 +86,7 @@ index 16ba742..67b5e88 100644
      /* Attach track auxiliary output to specified effect. Use effectId = 0
       * to detach track from effect.
 diff --git a/media/libmedia/AudioSystem.cpp b/media/libmedia/AudioSystem.cpp
-index 1a1bfda..e3342b9 100644
+index 2b57118..5e46ee1 100644
 --- a/media/libmedia/AudioSystem.cpp
 +++ b/media/libmedia/AudioSystem.cpp
 @@ -214,6 +214,11 @@ int AudioSystem::logToLinear(float volume)
@@ -114,7 +114,7 @@ index 1a1bfda..e3342b9 100644
  {
      audio_io_handle_t output;
 diff --git a/media/libmedia/AudioTrack.cpp b/media/libmedia/AudioTrack.cpp
-index 63f8b7c..cbad0d7 100644
+index f20c49d..4f419dc 100644
 --- a/media/libmedia/AudioTrack.cpp
 +++ b/media/libmedia/AudioTrack.cpp
 @@ -36,6 +36,21 @@ namespace android {
