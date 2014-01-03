@@ -96,11 +96,6 @@ BOARD_USE_SKIA_LCDTEXT := true
 USE_OPENGL_RENDERER := true
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 
-# Fix Graphics Issues
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.zygote.disable_gl_preload=true \
-  ro.bq.gpu_to_cpu_unsupported=true
-
 # egl
 BOARD_EGL_CFG := device/lge/p990/egl.cfg
 #BOARD_EGL_NEEDS_LEGACY_FB := true
@@ -142,11 +137,6 @@ TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-
-# low memory
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.config.low_ram=true \
-  dalvik.vm.jit.codecachesize=0
 
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true

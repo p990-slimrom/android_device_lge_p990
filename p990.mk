@@ -55,6 +55,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.zram.default=18 \
 	persist.service.zram=18
 
+# low memory
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.config.low_ram=true \
+  dalvik.vm.jit.codecachesize=0
+
 $(call inherit-product, build/target/product/full_base_telephony.mk)
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
