@@ -60,3 +60,12 @@ else
 	echo "     [FAIL]"
 fi
 
+echo "Apply patch to external/skia"
+echo -n "Apply patch 0001-external-skia-patch.patch"
+(cd external/skia; git am ../../device/lge/p990/patches/0001-external-skia-patch.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+	echo "     [DONE]"
+else
+	(cd external/skia; git am --abort)
+	echo "     [FAIL]"
+fi
