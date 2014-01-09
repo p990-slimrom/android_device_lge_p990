@@ -6,6 +6,7 @@ on early-init
 on fs
 # mount partitions
     mount_all /fstab.star
+    swapon_all /fstab.star
 
 on post-fs
 ## LGE

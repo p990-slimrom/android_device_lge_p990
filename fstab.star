@@ -16,3 +16,4 @@
 # external sd
 /dev/block/mmcblk1p1                           /external_sd      vfat    defaults                                                     recoveryonly
 /devices/platform/sdhci-tegra.2/mmc_host/mmc1  auto              auto    defaults                                                     voldmanaged=sdcard1:auto,noemulatedsd
+/dev/block/zram0                               none              swap    defaults zramsize=62914560
