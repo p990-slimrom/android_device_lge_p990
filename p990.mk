@@ -51,9 +51,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.sf.electron_frames=42 \
 	nv-camera-disable-early-graph=1 \
 	dalvik.vm.dexopt-data-only=1 \
-	ro.lge.audio_soundexception=true \
-	ro.zram.default=18 \
-	persist.service.zram=18
+	ro.lge.audio_soundexception=true
 
 # low memory
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -146,7 +144,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
     $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko \
     $(LOCAL_PATH)/kernel/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/kernel/zram.ko:system/lib/modules/zram.ko
 
 #PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/power.tegra.so:system/lib/hw/power.tegra.so \

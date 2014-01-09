@@ -12,3 +12,4 @@
 /dev/block/mmcblk0p8                           /recovery         emmc    defaults                                                     recoveryonly
 /devices/platform/sdhci-tegra.3/mmc_host/mmc0  auto              auto    defaults                                                     voldmanaged=sdcard0:11,nonremovable,noemulatedsd
 /devices/platform/sdhci-tegra.2/mmc_host/mmc1  auto              auto    defaults                                                     voldmanaged=sdcard1:auto,noemulatedsd
+/dev/block/zram0                               none              swap    defaults zramsize=62914560
