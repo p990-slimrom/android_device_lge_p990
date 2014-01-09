@@ -76,6 +76,6 @@ echo -n "Apply patch 0001-Work-around-broken-GL_TEXTURE_BINDING_EXTERNAL_OES-q.p
 if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
-	(cd external/skia; git am --abort)
+	(cd external/chromium_org; git am --abort)
 	echo "     [FAIL]"
 fi
