@@ -12,6 +12,7 @@ USE_SET_METADATA := false
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
 TARGET_BOARD_PLATFORM := tegra
+TARGET_TEGRA_VERSION := t20
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
@@ -23,6 +24,7 @@ TARGET_ARCH_VARIANT := armv7-a
 TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 ARCH_ARM_HAVE_TLS_REGISTER := true
+ARCH_ARM_HIGH_OPTIMIZATION := true
 ARCH_ARM_USE_NON_NEON_MEMCPY := true
 TARGET_BOOTLOADER_BOARD_NAME := p990
 
@@ -145,3 +147,16 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
 BOARD_HARDWARE_CLASS := device/lge/p990/cmhw/
+
+BOARD_MALLOC_ALIGNMENT := 16
+TARGET_EXTRA_CFLAGS := $(call cc-option,-mtune=cortex-a9) $(call cc-option,-mcpu=cortex-a9)
+
+#define to use all of the Linaro Cortex-A9 optimized string funcs,
+#instead of subset known to work on all machines
+USE_ALL_OPTIMIZED_STRING_FUNCS := true
+
+# Skip droiddoc build to save build time
+BOARD_SKIP_ANDROID_DOC_BUILD := true
+
+# Use a smaller subset of system fonts to keep image size lower
+SMALLER_FONT_FOOTPRINT := true
