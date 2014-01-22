@@ -156,6 +156,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     lgcpversion
 
+WIFI_BAND := 802_11_BG
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+
 PRODUCT_NAME := full_p990
 PRODUCT_DEVICE := p990
 PRODUCT_MODEL := LG-P990

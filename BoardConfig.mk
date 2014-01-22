@@ -3,9 +3,6 @@ TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
 #TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
 
-# Use a smaller subset of system fonts to keep image size lower
-SMALLER_FONT_FOOTPRINT := true
-
 USE_SET_METADATA := false
 
 # CPU
@@ -59,21 +56,8 @@ BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE           := bcmdhd
 #WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4329.ko"
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/bcm4329/fw_bcmdhd.bin"
-WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin"
-#WIFI_DRIVER_FW_PATH_P2P     := "/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin"
-
-#BOARD_WLAN_DEVICE := bcm4329
-#WIFI_DRIVER_FW_PATH_STA         := "/system/etc/wl/rtecdc.bin"
-#WIFI_DRIVER_FW_PATH_AP          := "/system/etc/wl/rtecdc-apsta.bin"
-#WIFI_DRIVER_MODULE_NAME         := "wireless"
-#WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko"
-#WIFI_DRIVER_MODULE_ARG          := "firmware_path=/system/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
-#WPA_SUPPLICANT_VERSION          := VER_0_8_X
-#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wext
-#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-#WIFI_DRIVER_HAS_LGE_SOFTAP      := true
-#BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 
 # bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -157,6 +141,3 @@ USE_ALL_OPTIMIZED_STRING_FUNCS := true
 
 # Skip droiddoc build to save build time
 BOARD_SKIP_ANDROID_DOC_BUILD := true
-
-# Use a smaller subset of system fonts to keep image size lower
-SMALLER_FONT_FOOTPRINT := true
