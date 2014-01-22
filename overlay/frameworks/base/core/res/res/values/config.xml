@@ -27,6 +27,9 @@
     <!-- The default iface on which to monitor data use -->
     <string name="config_datause_iface">vsnet0</string>
 
+    <!-- Boolean indicating whether Softap requires reloading AP firmware -->
+    <bool name="config_wifiApFirmwareReload">false</bool>
+
     <!-- Flag indicating whether the we should enable the automatic brightness in Settings.
 	 Software implementation will be used if config_hardware_auto_brightness_available is not set -->
     <bool name="config_automatic_brightness_available">true</bool>
