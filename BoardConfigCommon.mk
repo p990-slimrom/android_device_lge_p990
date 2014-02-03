@@ -1,7 +1,7 @@
 #COMMON_GLOBAL_CFLAGS += -DREVERSE_FFC_MIRROR_LOGIC -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS -DEGL_ALWAYS_ASYNC
 
 # inherit from the proprietary version
--include vendor/lge/star-common/BoardConfigVendor.mk
+-include vendor/lge/p990/BoardConfigVendor.mk
 
 TARGET_ARCH := arm
 TARGET_NO_BOOTLOADER := true
@@ -15,7 +15,7 @@ TARGET_ARCH_VARIANT_FPU := vfpv3-d16
 ARCH_ARM_HAVE_TLS_REGISTER := true
 ARCH_ARM_USE_NON_NEON_MEMCPY := true
 
-TARGET_SPECIFIC_HEADER_PATH := device/lge/star-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
 
 #TARGET_USERIMAGES_USE_EXT4 := true
 
@@ -45,7 +45,7 @@ WIFI_DRIVER_HAS_LGE_SOFTAP      := true
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 #BOARD_WEXT_NO_COMBO_SCAN       := true
 
-BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/star-common/vibrator.c
+BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
 
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 
@@ -69,4 +69,4 @@ BOARD_SYSFS_LIGHT_SENSOR := "/sys/devices/platform/i2c-gpio.5/i2c-5/5-0060/alc"
 TARGET_KERNEL_SOURCE := kernel/lge/star
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/star-common/vnd_bt.txt
+BOARD_BLUEDROID_VENDOR_CONF := device/lge/p990/vnd_bt.txt

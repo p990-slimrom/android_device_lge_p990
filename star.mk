@@ -1,4 +1,4 @@
-DEVICE_PACKAGE_OVERLAYS += device/lge/star-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
