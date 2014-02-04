@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Message;
 import android.os.Parcel;
+import android.os.SystemService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,8 +69,8 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         // RIL_REQUEST_LGE_SEND_COMMAND
         RILRequest rrLSC = RILRequest.obtain(
                 0x112, null);
-        rrLSC.mp.writeInt(1);
-        rrLSC.mp.writeInt(0);
+        rrLSC.mParcel.writeInt(1);
+        rrLSC.mParcel.writeInt(0);
         send(rrLSC);
 
         // The original (and unmodified) IMEI request
@@ -103,8 +104,87 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         return data;
     }
 
+    private void restartRild() {
+        setRadioState(RadioState.RADIO_UNAVAILABLE);
+        SystemService.stop("ril-daemon");
+        RILRequest.resetSerial();
+
+        // Clear request list
+        clearRequestList(RADIO_NOT_AVAILABLE, false);
+        // Thread sleeps are ususally a terrible idea, but we do want the radio
+        // stack to back off for a bit
+        SystemService.start("ril-daemon");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ie) {}
+        setRadioState(RadioState.RADIO_ON);
+    }
+
     static final int RIL_UNSOL_LGE_SIM_STATE_CHANGED = 1060;
     static final int RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW = 1061;
+    static final int RIL_UNSOL_LGE_XCALLSTAT = 1052;
+    static final int RIL_UNSOL_LGE_RESTART_RILD = 1054;
+    static final int RIL_UNSOL_LGE_UNSOL = 1080;
+    static final int RIL_REQUEST_LGE_SET_CPATH = 252;
+
+    @Override
+    public void
+    queryCallForwardStatus(int cfReason, int serviceClass,
+                String number, Message response) {
+        RILRequest rr
+            = RILRequest.obtain(RIL_REQUEST_QUERY_CALL_FORWARD_STATUS, response);
+
+        rr.mParcel.writeInt(2); // 2 is for query action, not in used anyway
+        rr.mParcel.writeInt(cfReason);
+        rr.mParcel.writeInt(511);
+        rr.mParcel.writeInt(PhoneNumberUtils.toaFromString(number));
+        rr.mParcel.writeString(number);
+        rr.mParcel.writeInt (0);
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                + " " + cfReason + " " + serviceClass);
+
+        send(rr);
+    }
+
+    @Override
+    protected Object
+    responseCallForward(Parcel p) {
+        int numInfos;
+        CallForwardInfo infos[];
+
+        numInfos = p.readInt();
+
+        infos = new CallForwardInfo[numInfos];
+
+        for (int i = 0 ; i < numInfos ; i++) {
+            infos[i] = new CallForwardInfo();
+
+            infos[i].status = p.readInt();
+            infos[i].reason = p.readInt();
+            infos[i].serviceClass = p.readInt();
+            infos[i].toa = p.readInt();
+            infos[i].number = PhoneNumberUtils.stripSeparators(p.readString());
+            infos[i].timeSeconds = p.readInt();
+        }
+
+        return infos;
+    }
+
+    @Override
+    public void
+    setMute (boolean enableMute, Message response) {
+        RILRequest rr
+                = RILRequest.obtain(RIL_REQUEST_LGE_SET_CPATH, response);
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                            + " " + enableMute);
+
+        rr.mParcel.writeInt(1);
+        rr.mParcel.writeInt(enableMute ? 7 : 8);
+
+        send(rr);
+    }
 
     @Override
     protected void
@@ -112,13 +192,18 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         Object ret;
         int dataPosition = p.dataPosition(); // save off position within the Parcel
         int response = p.readInt();
+        
+        String basebandVersion = SystemProperties.get("gsm.version.baseband");
+        String[] basebandSplit = basebandVersion == null ? new String[1] : basebandVersion.split("-");
 
         switch(response) {
             case RIL_UNSOL_ON_USSD: ret =  responseStrings(p); break;
-            case 1080: ret =  responseVoid(p); break; // RIL_UNSOL_LGE_FACTORY_READY
+            case RIL_UNSOL_LGE_UNSOL: ret =  responseVoid(p); break; // RIL_UNSOL_LGE_FACTORY_READY
+            case RIL_UNSOL_LGE_RESTART_RILD: ret =  responseVoid(p); break;
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED:
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW: ret =  responseVoid(p); break;
             case RIL_UNSOL_NITZ_TIME_RECEIVED: ret =  responseNitz(p); break;
+	    case RIL_UNSOL_LGE_XCALLSTAT: ret = responseVoid(p); break;
             default:
                 // Rewind the Parcel
                 p.setDataPosition(dataPosition);
@@ -128,6 +213,8 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 return;
         }
         switch(response) {
+	    case RIL_UNSOL_LGE_XCALLSTAT:
+		break;
             case RIL_UNSOL_ON_USSD:
                 String[] resp = (String[])ret;
 
@@ -151,9 +238,14 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                         new AsyncResult (null, resp, null));
                 }
                 break;
-            case 1080: // RIL_UNSOL_LGE_FACTORY_READY (NG)
+            case RIL_UNSOL_LGE_UNSOL:
                 /* Adjust request IDs */
-                RIL_REQUEST_HANG_UP_CALL = 206;
+            	if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])) {
+            		RIL_REQUEST_HANG_UP_CALL = 206;
+            	}
+                break;
+            case RIL_UNSOL_LGE_RESTART_RILD:
+                restartRild();
                 break;
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED:
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW:
@@ -175,9 +267,25 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 result[0] = ret;
                 result[1] = Long.valueOf(nitzReceiveTime);
 
-                boolean ignoreNitz = SystemProperties.getBoolean(
-                        TelephonyProperties.PROPERTY_IGNORE_NITZ, false);
-
+                // RIL_UNSOL_NITZ_TIME_RECEIVED handling
+                boolean ignoreNitz = false;
+                if (SystemProperties.getBoolean(TelephonyProperties.PROPERTY_IGNORE_NITZ, false)) {
+                    ignoreNitz = true;
+                } else {
+                    if ("LGSU660AT".equalsIgnoreCase(basebandSplit[0])) {
+                       ignoreNitz = true;
+                    } else {
+                    	// Detect V28e or newer BBs like
+                        // LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0
+                        if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
+                        		&& (basebandSplit.length > 2)
+                               	 	&& (basebandSplit[2].length() == 4)
+                                	&& (basebandSplit[2].toLowerCase().startsWith("v"))
+                                	&& (basebandSplit[2].compareToIgnoreCase("V28e") >= 0)) {
+                        	ignoreNitz = true;
+                        }
+                    }
+                }
                 if (ignoreNitz) {
                     if (RILJ_LOGD) riljLog("ignoring UNSOL_NITZ_TIME_RECEIVED");
                 } else {
