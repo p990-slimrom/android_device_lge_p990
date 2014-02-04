@@ -41,6 +41,7 @@ lib/libnvavp.so
 lib/libnvomxadaptor.so
 lib/libnvrm.so
 lib/hw/hwcomposer.tegra.so
+lib/hw/audio.a2dp.default.so
 lib/hw/audio.primary.star.so
 lib/hw/gps.tegra.so
 lib/hw/sensors.tegra.so
@@ -83,6 +84,8 @@ lib/libnvomxilclient.so
 lib/liblvvewrapper.so
 lib/libasound.so
 lib/libasound_module_rate_speexrate.so
+lib/libasound_module_rate_speexrate_best.so
+lib/libasound_module_rate_speexrate_medium.so
 lib/libnvmm_writer.so
 lib/libnvodm_misc.so
 lib/libnvmm_audio.so
