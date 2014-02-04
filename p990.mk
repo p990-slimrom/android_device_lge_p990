@@ -11,7 +11,8 @@ $(call inherit-product-if-exists, vendor/lge/p990/p990-vendor.mk)
 # Board-specific init
 PRODUCT_COPY_FILES += \
     device/lge/p990/init.p990.rc:root/init.star.rc \
-    $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc
+    $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
+    $(LOCAL_PATH)/fstab.p990:root/fstab.star
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
@@ -19,9 +20,19 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
     $(LOCAL_PATH)/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
 
-# Build kernel module instead of copying
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
+# prebuilt kernel stuff
+LOCAL_KERNEL := device/lge/p990/kernel/zImage
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel \
+    $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko \
+    $(LOCAL_PATH)/kernel/zram.ko:system/lib/modules/zram.ko
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/kernel/kowalski/power.tegra.so:system/lib/hw/power.tegra.so \
+    $(LOCAL_PATH)/kernel/kowalski/KowalskiManager.apk:system/app/KowalskiManager.apk \
+    $(LOCAL_PATH)/kernel/kowalski/95kowalski:system/etc/init.d/95kowalski \
+    $(LOCAL_PATH)/kernel/kowalski/alsa_amixer:system/xbin/alsa_amixer
 
 PRODUCT_PACKAGES += \
     lgcpversion
