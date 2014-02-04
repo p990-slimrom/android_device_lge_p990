@@ -4,7 +4,8 @@
 rild.libpath=/system/lib/liblgeril.so
 rild.libargs=-d /dev/ttyspi0
 
-ro.sf.lcd_density=240
+# set default lcd density to TVDPI
+ro.sf.lcd_density=213
 
 mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
 
