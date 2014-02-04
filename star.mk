@@ -15,6 +15,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media_profiles.xml:system/etc/media_profiles.xml \
     $(LOCAL_PATH)/media_codecs.xml:system/etc/media_codecs.xml \
     $(LOCAL_PATH)/asound.conf:system/etc/asound.conf \
+    $(LOCAL_PATH)/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/egl.cfg:system/lib/egl/egl.cfg \
     $(LOCAL_PATH)/prebuilt/setup-recovery:system/bin/setup-recovery \
     $(LOCAL_PATH)/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
@@ -73,7 +74,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/10-movestuff.sh:system/addon.d/10-movestuff.sh
 
 
-
 ## LGE stuffs
 PRODUCT_PACKAGES += \
     bridgeutil \
@@ -91,6 +91,12 @@ PRODUCT_PACKAGES += Torch
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp,adb
+
+# Enable Low Ram Device flag
+PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
+
+WIFI_BAND := 802_11_BG
+    $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE
