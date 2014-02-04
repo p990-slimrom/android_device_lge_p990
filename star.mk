@@ -1,5 +1,9 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
+
+PRODUCT_AAPT_CONFIG := normal large tvdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := tvdpi
+
 # Board-specific init
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init_recovery.rc:root/init_recovery.rc \
@@ -53,7 +57,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	dalvik.vm.dexopt-data-only=1 \
 	sys.mem.max_hidden_apps=4 \
 	ro.lge.audio_soundexception=true \
-	persist.service.zram=18
+	persist.service.zram=18 \
+	drm.service.enabled=true
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
