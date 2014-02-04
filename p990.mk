@@ -15,10 +15,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/fstab.p990:root/fstab.star
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/init.vsnet:system/bin/init.vsnet \
     $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
     $(LOCAL_PATH)/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/check_sdcard.sh:system/bin/check_sdcard.sh \
+    $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img
 
 # prebuilt kernel stuff
 LOCAL_KERNEL := device/lge/p990/kernel/zImage
