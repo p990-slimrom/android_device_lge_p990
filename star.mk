@@ -59,7 +59,7 @@ $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 $(call inherit-product, build/target/product/full_base_telephony.mk)
 
-PRODUCT_LOCALES += hdpi
+PRODUCT_LOCALES += tvdpi
 
 ## Ugly space-saving hack
 PRODUCT_PACKAGES += \
