@@ -1,6 +1,9 @@
 # inherit from the proprietary version
 -include device/lge/p990/BoardConfigCommon.mk
 
+# compatibility with old recoveries
+USE_SET_METADATA := false
+
 TARGET_BOOTLOADER_BOARD_NAME := p990
 
 BOARD_KERNEL_CMDLINE := 
@@ -30,3 +33,11 @@ TARGET_OTA_ASSERT_DEVICE := p990
 BOARD_RIL_CLASS := ../../../device/lge/p990/ril/
 
 #BOARD_TOUCH_RECOVERY := true
+
+# use the new recovery.fstab
+RECOVERY_FSTAB_VERSION = 2
+
+# recovery
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
+TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
+TARGET_RECOVERY_FSTAB = device/lge/p990/fstab.star
