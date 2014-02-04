@@ -1,3 +1,6 @@
+# Use a smaller subset of system fonts to keep image size lower
+SMALLER_FONT_FOOTPRINT := true
+
 # inherit from the proprietary version
 -include device/lge/p990/BoardConfigCommon.mk
 
