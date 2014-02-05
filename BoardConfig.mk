@@ -25,7 +25,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 # Try to build the kernel
 #TARGET_KERNEL_CONFIG := cyanogenmod_p990_defconfig
 
-TARGET_PREBUILT_KERNEL := device/lge/p990/kernel
+TARGET_PREBUILT_KERNEL := device/lge/p990/kernel/zImage
 
 BOARD_VOLD_MAX_PARTITIONS := 20
 
