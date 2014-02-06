@@ -61,6 +61,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.service.zram=18 \
 	drm.service.enabled=true
 
+# Disable SELinux
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.boot.selinux=disabled \
+	ro.build.selinux=0
+
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 $(call inherit-product, build/target/product/full_base_telephony.mk)
