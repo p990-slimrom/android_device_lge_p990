@@ -145,31 +145,11 @@ __BEGIN_DECLS
 /* Query ADSP Status */
 #define AUDIO_PARAMETER_KEY_ADSP_STATUS "ADSP_STATUS"
 
-/* Query Sound Card Status */
-#define AUDIO_PARAMETER_KEY_SND_CARD_STATUS "SND_CARD_STATUS"
-
 /* Query if Proxy can be Opend */
 #define AUDIO_CAN_OPEN_PROXY "can_open_proxy"
 
 /* Query fm volume */
 #define AUDIO_PARAMETER_KEY_FM_VOLUME "fm_volume"
-
-/**
- * audio codec parameters
- */
-
-#define AUDIO_OFFLOAD_CODEC_PARAMS "music_offload_codec_param"
-#define AUDIO_OFFLOAD_CODEC_BIT_PER_SAMPLE "music_offload_bit_per_sample"
-#define AUDIO_OFFLOAD_CODEC_BIT_RATE "music_offload_bit_rate"
-#define AUDIO_OFFLOAD_CODEC_AVG_BIT_RATE "music_offload_avg_bit_rate"
-#define AUDIO_OFFLOAD_CODEC_ID "music_offload_codec_id"
-#define AUDIO_OFFLOAD_CODEC_BLOCK_ALIGN "music_offload_block_align"
-#define AUDIO_OFFLOAD_CODEC_SAMPLE_RATE "music_offload_sample_rate"
-#define AUDIO_OFFLOAD_CODEC_ENCODE_OPTION "music_offload_encode_option"
-#define AUDIO_OFFLOAD_CODEC_NUM_CHANNEL  "music_offload_num_channels"
-#define AUDIO_OFFLOAD_CODEC_DOWN_SAMPLING  "music_offload_down_sampling"
-#define AUDIO_OFFLOAD_CODEC_DELAY_SAMPLES  "delay_samples"
-#define AUDIO_OFFLOAD_CODEC_PADDING_SAMPLES  "padding_samples"
 
 /**************************************/
 
@@ -178,7 +158,6 @@ struct audio_config {
     uint32_t sample_rate;
     audio_channel_mask_t channel_mask;
     audio_format_t  format;
-    audio_offload_info_t offload_info;
 };
 
 typedef struct audio_config audio_config_t;
@@ -277,22 +256,6 @@ struct audio_stream {
 };
 typedef struct audio_stream audio_stream_t;
 
-/* type of asynchronous write callback events. Mutually exclusive */
-typedef enum {
-    STREAM_CBK_EVENT_WRITE_READY, /* non blocking write completed */
-    STREAM_CBK_EVENT_DRAIN_READY  /* drain completed */
-} stream_callback_event_t;
-
-typedef int (*stream_callback_t)(stream_callback_event_t event, void *param, void *cookie);
-
-/* type of drain requested to audio_stream_out->drain(). Mutually exclusive */
-typedef enum {
-    AUDIO_DRAIN_ALL,            /* drain() returns when all data has been played */
-    AUDIO_DRAIN_EARLY_NOTIFY    /* drain() returns a short time before all data
-                                   from the current track has been played to
-                                   give time for gapless track switch */
-} audio_drain_type_t;
-
 /**
  * audio_stream_out is the abstraction interface for the audio output hardware.
  *
@@ -385,81 +348,6 @@ struct audio_stream_out {
                                      int *isAvail);
 #endif
 #endif
-
-    /**
-     * set the callback function for notifying completion of non-blocking
-     * write and drain.
-     * Calling this function implies that all future write() and drain()
-     * must be non-blocking and use the callback to signal completion.
-     */
-    int (*set_callback)(struct audio_stream_out *stream,
-            stream_callback_t callback, void *cookie);
-
-
-    /**
-     * Notifies to the audio driver to stop playback however the queued buffers are
-     * retained by the hardware. Useful for implementing pause/resume. Empty implementation
-     * if not supported however should be implemented for hardware with non-trivial
-     * latency. In the pause state audio hardware could still be using power. User may
-     * consider calling suspend after a timeout.
-     *
-     * Implementation of this function is mandatory for offloaded playback.
-     */
-    int (*pause)(struct audio_stream_out* stream);
-
-    /**
-     * Notifies to the audio driver to resume playback following a pause.
-     * Returns error if called without matching pause.
-     *
-     * Implementation of this function is mandatory for offloaded playback.
-     */
-    int (*resume)(struct audio_stream_out* stream);
-
-    /**
-     * Requests notification when data buffered by the driver/hardware has
-     * been played. If set_callback() has previously been called to enable
-     * non-blocking mode, the drain() must not block, instead it should return
-     * quickly and completion of the drain is notified through the callback.
-     * If set_callback() has not been called, the drain() must block until
-     * completion.
-     * If type==AUDIO_DRAIN_ALL, the drain completes when all previously written
-     * data has been played.
-     * If type==AUDIO_DRAIN_EARLY_NOTIFY, the drain completes shortly before all
-     * data for the current track has played to allow time for the framework
-     * to perform a gapless track switch.
-     *
-     * Drain must return immediately on stop() and flush() call
-     *
-     * Implementation of this function is mandatory for offloaded playback.
-     */
-    int (*drain)(struct audio_stream_out* stream, audio_drain_type_t type );
-
-    /**
-     * Notifies to the audio driver to flush the queued data. Stream must already
-     * be paused before calling flush().
-     *
-     * Implementation of this function is mandatory for offloaded playback.
-     */
-   int (*flush)(struct audio_stream_out* stream);
-
-    /**
-     * Return a recent count of the number of audio frames presented to an external observer.
-     * This excludes frames which have been written but are still in the pipeline.
-     * The count is not reset to zero when output enters standby.
-     * Also returns the value of CLOCK_MONOTONIC as of this presentation count.
-     * The returned count is expected to be 'recent',
-     * but does not need to be the most recent possible value.
-     * However, the associated time should correspond to whatever count is returned.
-     * Example:  assume that N+M frames have been presented, where M is a 'small' number.
-     * Then it is permissible to return N instead of N+M,
-     * and the timestamp should correspond to N rather than N+M.
-     * The terms 'recent' and 'small' are not defined.
-     * They reflect the quality of the implementation.
-     *
-     * 3.0 and higher only.
-     */
-    int (*get_presentation_position)(const struct audio_stream_out *stream,
-                               uint64_t *frames, struct timespec *timestamp);
 
 };
 typedef struct audio_stream_out audio_stream_out_t;
