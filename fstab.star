@@ -10,10 +10,11 @@
 /dev/block/mmcblk0p7                           /lgdrm            ext3    noatime,nosuid,nodev,errors=panic                            wait
 /dev/block/mmcblk0p6                           /boot             emmc    defaults                                                     recoveryonly
 /dev/block/mmcblk0p8                           /recovery         emmc    defaults                                                     recoveryonly
-
 # internal sd
-/devices/platform/sdhci-tegra.3/mmc_host/mmc0  auto              auto    defaults                                                     voldmanaged=sdcard0:11,nonremovable,noemulatedsd
-
+/dev/block/mmcblk0p11                          /sdcard           vfat    defaults                                                     recoveryonly
+/devices/platform/sdhci-tegra.3/mmc_host/mmc0  /storage/sdcard0  auto    defaults                                                     voldmanaged=emmc:11,nonremovable
 # external sd
-/devices/platform/sdhci-tegra.2/mmc_host/mmc1  auto              auto    defaults                                                     voldmanaged=sdcard1:auto,noemulatedsd
+/dev/block/mmcblk1p1                           /external_sd      vfat    defaults                                                     recoveryonly
+/devices/platform/sdhci-tegra.2/mmc_host/mmc1  /storage/sdcard1  auto    defaults                                                     voldmanaged=sdcard:auto
+
 /dev/block/zram0                               none              swap    defaults zramsize=62914560
