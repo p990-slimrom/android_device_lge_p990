@@ -57,6 +57,7 @@ struct {
     { "media.tegra",      AID_MEDIA,    0 },
     { "service.bootanim.exit", AID_GRAPHICS, 0 },
     { "nvidia.", AID_SYSTEM, 0 },
+    { "camera.",	  AID_SYSTEM,	0 },
     { NULL, 0, 0 }
 };
 
