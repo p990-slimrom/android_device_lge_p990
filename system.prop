@@ -4,6 +4,8 @@
 rild.libpath=/system/lib/liblgeril.so
 rild.libargs=-d /dev/ttyspi0
 
+wifi.interface=wlan0
+
 # set default lcd density to TVDPI
 ro.sf.lcd_density=213
 
