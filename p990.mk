@@ -37,6 +37,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/95kowalski:system/etc/init.d/95kowalski \
     $(LOCAL_PATH)/kernel/kowalski/alsa_amixer:system/xbin/alsa_amixer
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/kernel/kowalski/80swap:system/etc/init.d/80swap \
+
 PRODUCT_PACKAGES += \
     lgcpversion
 

@@ -1,0 +1,10 @@
+#!/system/bin/sh
+
+TARGET_PARTITION=/dev/block/mmcblk0p4
+
+swapon $TARGET_PARTITION
+if [ "$?" -ne "0" ];
+then
+	mkswap $TARGET_PARTITION
+	swapon $TARGET_PARTITION
+fi;
