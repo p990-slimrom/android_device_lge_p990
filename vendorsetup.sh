@@ -21,6 +21,16 @@ echo ""
 echo "Applying patches for P990"
 echo ""
 
+echo "Apply patch to frameworks/native"
+echo -n "Apply patch 0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch"
+(cd frameworks/native; git am ../../device/lge/p990/patches/0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+    echo "     [DONE]"
+else
+    (cd frameworks/native; git am --abort)
+    echo "     [FAIL]"
+fi
+
 echo "Apply patch to frameworks/av"
 echo -n "Apply patch 0001-ifdef-for-ICS-Audio-Blob-compatibility.patch"
 (cd frameworks/av; git am ../../device/lge/p990/patches/0001-ifdef-for-ICS-Audio-Blob-compatibility.patch) > /dev/null 2>&1
@@ -57,5 +67,15 @@ if [ $? == 0 ]; then
 	echo "     [DONE]"
 else
 	(cd external/chromium_org; git am --abort)
+	echo "     [FAIL]"
+fi
+
+echo "Apply patch to hardware/libhardware"
+echo -n "Apply patch 0001-Star-audio-patch.patch"
+(cd hardware/libhardware; git am ../../device/lge/p990/patches/0001-Star-audio-patch.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+	echo "     [DONE]"
+else
+	(cd hardware/libhardware; git am --abort)
 	echo "     [FAIL]"
 fi
