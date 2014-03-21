@@ -142,8 +142,6 @@ LOCAL_KERNEL := device/lge/p990/kernel/zImage
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko \
-    $(LOCAL_PATH)/kernel/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
 
 #PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/power.tegra.so:system/lib/hw/power.tegra.so \
