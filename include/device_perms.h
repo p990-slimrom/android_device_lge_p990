@@ -1,4 +1,4 @@
-#define PROPERTY_PERMS_APPEND \
+#define CONTROL_PERMS_APPEND \
     { "rawip_vsnet1", AID_RADIO, AID_RADIO }, \
     { "rawip_vsnet2", AID_RADIO, AID_RADIO }, \
     { "rawip_vsnet3", AID_RADIO, AID_RADIO }, \
