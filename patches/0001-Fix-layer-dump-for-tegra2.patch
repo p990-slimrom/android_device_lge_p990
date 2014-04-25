@@ -1,0 +1,78 @@
+From a1b9f17f0efb56b0f9ffe99eecf24940c3aad2d0 Mon Sep 17 00:00:00 2001
+From: hjunii <hjunii@gmail.com>
+Date: Thu, 24 Apr 2014 20:28:51 +0900
+Subject: [PATCH 1/1] Fix layer dump for tegra2
+
+Change-Id: I9d3331ce3ad2bae8e70a910d926d7ac54c6bee6a
+---
+ .../surfaceflinger/DisplayHardware/HWComposer.cpp  | 54 ++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+
+diff --git a/services/surfaceflinger/DisplayHardware/HWComposer.cpp b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+index f03032f..6c8b2a6 100644
+--- a/services/surfaceflinger/DisplayHardware/HWComposer.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+@@ -1373,6 +1373,60 @@ void HWComposer::dump(String8& result) const {
+                     i, disp.width, disp.height, disp.xdpi, disp.ydpi, disp.refresh);
+ 
+             if (disp.list) {
++
++                if ( hwcApiVersion(mHwc) == 0)
++                {
++                    hwc_layer_list_t *list = (hwc_layer_list_t*) disp.list;
++                    result.appendFormat(
++                            "  numHwLayers=%u, flags=%08x\n",
++                            list->numHwLayers, list->flags);
++
++                    result.append(
++                            "    type    |  handle  |   hints  |   flags  | tr | blend |  format  |          source crop            |           frame           name \n"
++                            "------------+----------+----------+----------+----+-------+----------+---------------------------------+--------------------------------\n");
++                    //      " __________ | ________ | ________ | ________ | __ | _____ | ________ | [_____._,_____._,_____._,_____._] | [_____,_____,_____,_____]
++                    for (size_t i=0 ; i<list->numHwLayers ; i++) {
++                        const hwc_layer_t&l = list->hwLayers[i];
++                        int32_t format = -1;
++                        String8 name("unknown");
++
++                        if (i < visibleLayersSortedByZ.size()) {
++                            const sp<Layer>& layer(visibleLayersSortedByZ[i]);
++                            const sp<GraphicBuffer>& buffer(
++                                    layer->getActiveBuffer());
++                            if (buffer != NULL) {
++                                format = buffer->getPixelFormat();
++                            }
++                            name = layer->getName();
++                        }
++
++                        int type = l.compositionType;
++                        if (type == HWC_FRAMEBUFFER_TARGET) {
++                            name = "HWC_FRAMEBUFFER_TARGET";
++                            format = disp.format;
++                        }
++
++                        static char const* compositionTypeName[] = {
++                            "GLES",
++                            "HWC",
++                            "BACKGROUND",
++                            "FB TARGET",
++                            "FB_BLIT",
++                            "UNKNOWN"};
++                        if (type >= NELEM(compositionTypeName))
++                            type = NELEM(compositionTypeName) - 1;
++
++                        result.appendFormat(
++                                " %10s | %08x | %08x | %08x | %02x | %05x | %08x | [%7d,%7d,%7d,%7d] | [%5d,%5d,%5d,%5d] %s\n",
++                                compositionTypeName[type],
++                                intptr_t(l.handle), l.hints, l.flags, l.transform, l.blending, format,
++                                l.sourceCrop.left, l.sourceCrop.top, l.sourceCrop.right, l.sourceCrop.bottom,
++                                l.displayFrame.left, l.displayFrame.top, l.displayFrame.right, l.displayFrame.bottom,
++                                name.string());
++                    }
++                    continue;
++                }
++
+                 result.appendFormat(
+                         "  numHwLayers=%u, flags=%08x\n",
+                         disp.list->numHwLayers, disp.list->flags);
+-- 
+1.9.1
+
