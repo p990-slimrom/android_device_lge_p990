@@ -194,7 +194,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/camera/f50.apk:system/app/f50.apk \
     $(LOCAL_PATH)/ota/OTAUpdater.apk:system/app/OTAUpdater.apk
 
-
 PRODUCT_PACKAGES += \
     lgcpversion
 
