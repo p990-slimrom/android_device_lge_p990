@@ -138,9 +138,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img
 
 # prebuilt kernel stuff
-LOCAL_KERNEL := device/lge/p990/kernel/zImage
+#LOCAL_KERNEL := device/lge/p990/kernel/zImage
 
-PRODUCT_COPY_FILES += \
+#PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
 
 #PRODUCT_COPY_FILES += \
