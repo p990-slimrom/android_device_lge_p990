@@ -151,6 +151,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/iwconfig:system/xbin/iwconfig \
     $(LOCAL_PATH)/kernel/kowalski/iwlist:system/xbin/iwlist
 
+# Copy Camera
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/camera/f50.apk:system/app/f50.apk
+
 PRODUCT_PACKAGES += \
     lgcpversion
 
