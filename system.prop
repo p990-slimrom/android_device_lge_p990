@@ -22,3 +22,8 @@ ro.telephony.ril_class=LGEInfineon
 #
 # Enable RIL recovery
 persist.radio.rr.enable=1
+
+# OTA
+otaupdater.otaid=p990-slimrom
+otaupdater.otatime=20140501-0000
+otaupdater.otaver=4.4.2.build.4.8
