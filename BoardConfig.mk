@@ -1,8 +1,11 @@
 LOCAL_PATH := device/lge/p990
-TARGET_SPECIFIC_HEADER_PATH := device/lge/p990/include
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/lge/p990/releasetools/p990-newbl_ota_from_target_files
-BOARD_HARDWARE_CLASS := device/lge/p990/cmhw/
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := $(LOCAL_PATH)/releasetools/p990-newbl_ota_from_target_files
+BOARD_HARDWARE_CLASS := $(LOCAL_PATH)/cmhw/
+
+# testing
+BOARD_MALLOC_ALIGNMENT := 16
 
 # CPU
 TARGET_ARCH := arm
@@ -39,12 +42,12 @@ BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_KERNEL_CMDLINE := 
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800
-#TARGET_KERNEL_SOURCE := kernel/lge/star
-#TARGET_KERNEL_CONFIG := cyanogenmod_p990_defconfig
+TARGET_KERNEL_SOURCE := kernel/lge/p990
+TARGET_KERNEL_CONFIG := kowalski_defconfig
 HAVE_SELINUX := false
 
 # prebuilt kernel
-TARGET_PREBUILT_KERNEL := device/lge/p990/kernel/zImage
+TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel/zImage
 
 # wifi
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
@@ -60,9 +63,9 @@ WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 # bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/lge/p990/config/bluetooth/vnd_star.txt
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/p990/config/bluetooth
-BOARD_BLUETOOTH_LIBBT_VNDCFG := device/lge/p990/config/bluetooth/bt_vendor.conf
+BOARD_BLUEDROID_VENDOR_CONF := $(LOCAL_PATH)/config/bluetooth/vnd_star.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/config/bluetooth
+BOARD_BLUETOOTH_LIBBT_VNDCFG := $(LOCAL_PATH)/config/bluetooth/bt_vendor.conf
 TARGET_NEEDS_BLUETOOTH_INIT_DELAY := true
 
 # audio
@@ -81,7 +84,7 @@ BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 BOARD_USE_MHEAP_SCREENSHOT := true
  
 # egl
-BOARD_EGL_CFG := device/lge/p990/egl.cfg
+BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
 BOARD_EGL_NEEDS_FNW := true
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
@@ -97,24 +100,26 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_OTA_ASSERT_DEVICE := p990
 
 # ril
-BOARD_RIL_CLASS := ../../../device/lge/p990/ril/
+BOARD_RIL_CLASS := $(LOCAL_PATH)/ril/
 BOARD_MOBILEDATA_INTERFACE_NAME := "vsnet0"
 
 # recovery
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_FSTAB := device/lge/p990/ramdisk/fstab.star
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/ramdisk/fstab.star
 RECOVERY_FSTAB_VERSION := 2
+
+# Since some recoveries don't support the "set_metadata" command, try not use them
 USE_SET_METADATA := false
 SKIP_SET_METADATA := true
 
 # sensors
 BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
-BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
+BOARD_HAS_VIBRATOR_IMPLEMENTATION := $(LOCAL_PATH)/vibrator.c
 
 # TWRP
-TARGET_RECOVERY_INITRC := device/lge/p990/ramdisk/init.recovery.rc
+TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/ramdisk/init.recovery.rc
 TW_BRIGHTNESS_PATH := /sys/class/backlight/aat2870-backlight/brightness
 DEVICE_RESOLUTION := 480x800
 TW_INTERNAL_STORAGE_PATH := "/sdcard"
