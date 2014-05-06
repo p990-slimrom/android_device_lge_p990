@@ -2,9 +2,9 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init_recovery.rc:root/init_recovery.rc \
-    $(LOCAL_PATH)/init.cm-star.rc:root/init.cm-star.rc \
-    $(LOCAL_PATH)/init.star.usb.rc:root/init.star.usb.rc
+    $(LOCAL_PATH)/ramdisk/init_recovery.rc:root/init_recovery.rc \
+    $(LOCAL_PATH)/ramdisk/init.cm-star.rc:root/init.cm-star.rc \
+    $(LOCAL_PATH)/ramdisk/init.star.usb.rc:root/init.star.usb.rc
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
@@ -107,9 +107,9 @@ $(call inherit-product, vendor/lge/p990/p990-vendor.mk)
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    device/lge/p990/init.p990.rc:root/init.star.rc \
-    $(LOCAL_PATH)/ueventd.tegra.rc:root/ueventd.star.rc \
-    $(LOCAL_PATH)/fstab.star:root/fstab.star
+    $(LOCAL_PATH)/ramdisk/init.p990.rc:root/init.star.rc \
+    $(LOCAL_PATH)/ramdisk/ueventd.tegra.rc:root/ueventd.star.rc \
+    $(LOCAL_PATH)/ramdisk/fstab.star:root/fstab.star
 
 # TWRP
 PRODUCT_COPY_FILES += \

@@ -104,7 +104,7 @@ BOARD_MOBILEDATA_INTERFACE_NAME := "vsnet0"
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_FSTAB := device/lge/p990/fstab.star
+TARGET_RECOVERY_FSTAB := device/lge/p990/ramdisk/fstab.star
 RECOVERY_FSTAB_VERSION := 2
 USE_SET_METADATA := false
 SKIP_SET_METADATA := true
@@ -114,7 +114,7 @@ BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_m
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/lge/p990/vibrator.c
 
 # TWRP
-TARGET_RECOVERY_INITRC := device/lge/p990/init.recovery.rc
+TARGET_RECOVERY_INITRC := device/lge/p990/ramdisk/init.recovery.rc
 TW_BRIGHTNESS_PATH := /sys/class/backlight/aat2870-backlight/brightness
 DEVICE_RESOLUTION := 480x800
 TW_INTERNAL_STORAGE_PATH := "/sdcard"
