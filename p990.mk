@@ -66,7 +66,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # We want the dalvik-cache to be for system & user apps on the /data partition
 PRODUCT_PROPERTY_OVERRIDES += \
-	dalvik.vm.dexopt-data-only=1
+    dalvik.vm.dexopt-data-only=1
 
 # Disable camera early graph connect as we can't prebuild graph due to memory
 # constraints in whistler.
@@ -125,7 +125,7 @@ PRODUCT_PACKAGES += \
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp,adb
+    persist.sys.usb.config=mtp,adb
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_MANUFACTURER := LGE
