@@ -60,6 +60,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.zram.default=18 \
     persist.service.zram=18
 
+# force transparent statusbar
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.force_transbar=true
+
 # Graphic glitches fix
 PRODUCT_PROPERTY_OVERRIDES += \
    debug.hwui.render_dirty_regions=false
