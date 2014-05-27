@@ -15,6 +15,7 @@
 #
 
 add_lunch_combo cm_p990-userdebug
+add_lunch_combo slim_p990-userdebug
 
 echo ""
 echo "Applying patches for P990"
