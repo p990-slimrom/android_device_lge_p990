@@ -1,5 +1,8 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
+MINI_GAPPS := true
+$(call inherit-product, vendor/google/tiny_gapps_nonneon_tonyp.mk)
+
 # Board-specific init
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init_recovery.rc:root/init_recovery.rc \
@@ -189,10 +192,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/iwconfig:system/xbin/iwconfig \
     $(LOCAL_PATH)/kernel/kowalski/iwlist:system/xbin/iwlist
 
-# Copy Camera and OTA
+# Copy Camera
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/camera/f50.apk:system/app/f50.apk \
-    $(LOCAL_PATH)/ota/OTAUpdater.apk:system/app/OTAUpdater.apk
+    $(LOCAL_PATH)/camera/f50.apk:system/app/f50.apk
 
 PRODUCT_PACKAGES += \
     lgcpversion
