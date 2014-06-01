@@ -59,9 +59,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.respect_als=true \
     ro.bt.bdaddr_path=/sys/devices/platform/bd_address/bdaddr_if \
     debug.sf.electron_frames=42 \
-    ro.lge.audio_soundexception=true \
-    ro.zram.default=18 \
-    persist.service.zram=18
+    ro.lge.audio_soundexception=true
 
 # force transparent statusbar
 PRODUCT_PROPERTY_OVERRIDES += \
