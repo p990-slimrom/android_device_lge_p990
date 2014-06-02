@@ -32,6 +32,7 @@ cd $DIR/frameworks/av/; git fetch https://github.com/p990-slimrom/frameworks_av.
 cd $DIR/frameworks/base/;  git fetch https://github.com/p990-slimrom/frameworks_base.git && git cherry-pick 29bb62af80040218495d04f1bedaa3d60397d48e
 cd $DIR/bootable/recovery/; git fetch https://github.com/p990-slimrom/bootable_recovery.git && git cherry-pick 7927f8cbb00b2d708d318e5a2d7fb719691e1685
 cd $DIR/external/chromium/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_external_chromium tachyon-2.0 && git cherry-pick 6dae14a200d444fc7e834bc2369437d37851d376
+cd $DIR/external/chromium/; git fetch https://github.com/p990-slimrom/platform_external_chromium.git && git cherry-pick fbdf3f1c685c036ee248c634a61e80605768b5cd
 cd $DIR/external/oprofile/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_external_oprofile tachyon-2.0 && git cherry-pick d2564470a30a2e643fb61714a5e8590a6e8cdc2b
 cd $DIR/external/e2fsprogs/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_external_e2fsprogs tachyon-2.0 && git cherry-pick 75088ae111d6c09fb1a5fdf2eccacbeb54d1b76c
 cd $DIR/bionic/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_bionic tachyon-2.0 && git cherry-pick f071fb6eef62cc4928d0521460599fab04b9969f
