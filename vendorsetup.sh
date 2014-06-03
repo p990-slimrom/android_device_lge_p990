@@ -51,6 +51,7 @@ cd $DIR/frameworks/wilhelm/; git fetch https://github.com/IAmTheOneTheyCallNeo/a
 #cd $DIR/hardware/qcom/gps/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_hardware_qcom_gps tachyon-2.0 && git cherry-pick 4bf8441c46cddcdc9f604d1a012166e05530744c
 #cd $DIR/external/lsof/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_external_lsof tachyon-2.0 && git cherry-pick 44e30c310ed2f0c0ac4e8488fd37d51f91f933bf
 cd $DIR/frameworks/ex/; git fetch https://github.com/IAmTheOneTheyCallNeo/android_frameworks_ex tachyon-2.0 && git cherry-pick a59bcbaa97ad8d62bd2e5d06d25f411c4aa06253
+cd $DIR/packages/apps/DSPManager/; git fetch https://github.com/p990-slimrom/packages_apps_DSPManager.git && git cherry-pick 1f8d12724c6cc21706ecff694c76e3bde3c897db
 cd $DIR/
 
 
