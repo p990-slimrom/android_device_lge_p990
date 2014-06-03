@@ -27,6 +27,7 @@ cd $DIR/vendor/slim/; git fetch https://github.com/p990-slimrom/vendor_slim.git 
 
 echo -n "Apply ggc4.8 changes"
 cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 4ccbe6c8a0ff44e9a78c510c9e7460258f8f35ea
+cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick fde36e5114b2f9a8a8d87ff712adf044f015bf8c
 cd $DIR/dalvik/; git fetch https://github.com/p990-slimrom/android_dalvik.git && git cherry-pick 39dcfa086cba4b381aba26f0417c9074a0b53d68
 cd $DIR/frameworks/av/; git fetch https://github.com/p990-slimrom/frameworks_av.git && git cherry-pick a7fdaecf3523070643bb4eaacdc447b81f8c13fa
 cd $DIR/frameworks/base/;  git fetch https://github.com/p990-slimrom/frameworks_base.git && git cherry-pick 29bb62af80040218495d04f1bedaa3d60397d48e
