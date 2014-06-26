@@ -28,6 +28,10 @@ cd $DIR/vendor/slim/; git fetch https://github.com/p990-slimrom/vendor_slim.git 
 echo -n "Apply ggc4.8 changes"
 cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 99ef9408ab4b04b440cc9aeed9d37f849c7b9723
 cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 0564f2b5031c60f146aaf7e500835dea4f4d4e92
+
+echo -n "Apply extFAT patch"
+cd $DIR/external/fuse/; git fetch https://github.com/JustArchi/android_external_fuse.git && git cherry-pick 78ebbc4404de260862dca5f0454bffccee650e0d
+
 cd $DIR/
 
 
