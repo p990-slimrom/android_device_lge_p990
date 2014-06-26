@@ -194,6 +194,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/camera/f50.apk:system/app/f50.apk
 
+# Copy Camera
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/apps/PerformanceControl-2.1.19.apk:system/app/PerformanceControl-2.1.19.apk
+
 PRODUCT_PACKAGES += \
     lgcpversion
 
