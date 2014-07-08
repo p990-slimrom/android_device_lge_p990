@@ -58,10 +58,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.electron_frames=42 \
     ro.lge.audio_soundexception=true
 
-# force transparent statusbar
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.force_transbar=true
-
 # Graphic glitches fix
 PRODUCT_PROPERTY_OVERRIDES += \
    debug.hwui.render_dirty_regions=false
