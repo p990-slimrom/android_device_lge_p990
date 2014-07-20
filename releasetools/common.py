@@ -287,40 +287,29 @@ def BuildBootableImage(sourcedir, fs_config_file, info_dict=None):
   assert p1.returncode == 0, "mkbootfs of %s ramdisk failed" % (targetname,)
   assert p2.returncode == 0, "minigzip of %s ramdisk failed" % (targetname,)
 
-  """check if uboot is requested"""
-  fn = os.path.join(sourcedir, "ubootargs")
+  cmd = ["mkbootimg", "--kernel", os.path.join(sourcedir, "kernel")]
+
+  fn = os.path.join(sourcedir, "cmdline")
   if os.access(fn, os.F_OK):
-    cmd = ["mkimage"]
-    for argument in open(fn).read().rstrip("\n").split(" "):
-      cmd.append(argument)
-    cmd.append("-d")
-    cmd.append(os.path.join(sourcedir, "kernel")+":"+ramdisk_img.name)
-    cmd.append(img.name)
+    cmd.append("--cmdline")
+    cmd.append(open(fn).read().rstrip("\n"))
 
-  else:
-    cmd = ["mkbootimg", "--kernel", os.path.join(sourcedir, "kernel")]
+  fn = os.path.join(sourcedir, "base")
+  if os.access(fn, os.F_OK):
+    cmd.append("--base")
+    cmd.append(open(fn).read().rstrip("\n"))
 
-    fn = os.path.join(sourcedir, "cmdline")
-    if os.access(fn, os.F_OK):
-      cmd.append("--cmdline")
-      cmd.append(open(fn).read().rstrip("\n"))
+  fn = os.path.join(sourcedir, "pagesize")
+  if os.access(fn, os.F_OK):
+    cmd.append("--pagesize")
+    cmd.append(open(fn).read().rstrip("\n"))
 
-    fn = os.path.join(sourcedir, "base")
-    if os.access(fn, os.F_OK):
-      cmd.append("--base")
-      cmd.append(open(fn).read().rstrip("\n"))
+  args = info_dict.get("mkbootimg_args", None)
+  if args and args.strip():
+    cmd.extend(args.split())
 
-    fn = os.path.join(sourcedir, "pagesize")
-    if os.access(fn, os.F_OK):
-      cmd.append("--pagesize")
-      cmd.append(open(fn).read().rstrip("\n"))
-
-    args = info_dict.get("mkbootimg_args", None)
-    if args and args.strip():
-      cmd.extend(args.split())
-
-    cmd.extend(["--ramdisk", ramdisk_img.name,
-                "--output", img.name])
+  cmd.extend(["--ramdisk", ramdisk_img.name,
+              "--output", img.name])
 
   p = Run(cmd, stdout=subprocess.PIPE)
   p.communicate()
@@ -500,6 +489,7 @@ def CheckSize(data, target, info_dict):
   mount_point = "/" + target
 
   if info_dict["fstab"]:
+    if mount_point == "/userdata_extra": mount_point = "/data"
     if mount_point == "/userdata": mount_point = "/data"
     p = info_dict["fstab"][mount_point]
     fs_type = p.fs_type
@@ -967,9 +957,11 @@ PARTITION_TYPES = { "bml": "BML",
                     "ext3": "EMMC",
                     "ext4": "EMMC",
                     "emmc": "EMMC",
+                    "f2fs": "EMMC",
                     "mtd": "MTD",
                     "yaffs2": "MTD",
-                    "vfat": "EMMC" }
+                    "vfat": "EMMC"
+}
 
 def GetTypeAndDevice(mount_point, info):
   fstab = info["fstab"]
@@ -977,3 +969,18 @@ def GetTypeAndDevice(mount_point, info):
     return PARTITION_TYPES[fstab[mount_point].fs_type], fstab[mount_point].device
   else:
     return None
+
+
+def ParseCertificate(data):
+  """Parse a PEM-format certificate."""
+  cert = []
+  save = False
+  for line in data.split("\n"):
+    if "--END CERTIFICATE--" in line:
+      break
+    if save:
+      cert.append(line)
+    if "--BEGIN CERTIFICATE--" in line:
+      save = True
+  cert = "".join(cert).decode('base64')
+  return cert

@@ -93,7 +93,7 @@ class EdifyGenerator(object):
   def AssertDevice(self, device):
     """Assert that the device identifier is the given string."""
     cmd = ('assert(' +
-           ' || \0'.join(['getprop("ro.product.device") == "%s" || getprop("ro.build.product") == "%s"'
+           ' || \0'.join(['getprop("ro.product.device") == "%s" || getprop ("ro.build.product") == "%s"'
                          % (i, i) for i in device.split(",")]) +
            ');')
     self.script.append(self._WordWrap(cmd))
@@ -116,6 +116,7 @@ class EdifyGenerator(object):
     self.script.append('delete("/system/bin/lgdrm.img");')
 
   def RunBackup(self, command):
+    self.script.append('package_extract_dir("system/addon.d", "/system/addon.d");')
     self.script.append('package_extract_file("system/bin/backuptool.sh", "/tmp/backuptool.sh");')
     self.script.append('package_extract_file("system/bin/backuptool.functions", "/tmp/backuptool.functions");')
     self.script.append('set_perm(0, 0, 0777, "/tmp/backuptool.sh");')
@@ -170,7 +171,7 @@ class EdifyGenerator(object):
       self.mounts.add(p.mount_point)
 
   def Unmount(self, mount_point):
-    """Unmount the partiiton with the given mount_point."""
+    """Unmount the partition with the given mount_point."""
     if mount_point in self.mounts:
       self.mounts.remove(mount_point)
       self.script.append('unmount("%s");' % (mount_point,))
@@ -209,6 +210,20 @@ class EdifyGenerator(object):
     cmd = "delete(" + ",\0".join(['"%s"' % (i,) for i in file_list]) + ");"
     self.script.append(self._WordWrap(cmd))
 
+  def RenameFile(self, srcfile, tgtfile):
+    """Moves a file from one location to another."""
+    if self.info.get("update_rename_support", False):
+      self.script.append('rename("%s", "%s");' % (srcfile, tgtfile))
+    else:
+      raise ValueError("Rename not supported by update binary")
+
+  def SkipNextActionIfTargetExists(self, tgtfile, tgtsha1):
+    """Prepend an action with an apply_patch_check in order to
+       skip the action if the file exists.  Used when a patch
+       is later renamed."""
+    cmd = ('sha1_check(read_file("%s"), %s) || ' % (tgtfile, tgtsha1))
+    self.script.append(self._WordWrap(cmd))
+
   def ApplyPatch(self, srcfile, tgtfile, tgtsize, tgtsha1, *patchpairs):
     """Apply binary patches (in *patchpairs) to the given srcfile to
     produce tgtfile (which may be "-" to indicate overwriting the
@@ -234,14 +249,14 @@ class EdifyGenerator(object):
       args = {'device': p.device, 'fn': fn}
       if partition_type == "MTD":
         self.script.append(
-            'package_extract_file("%(fn)s", "/tmp/boot.img");'
+            'package_extract_file("%(fn)s", "/tmp/boot.img");\n'
             'write_raw_image("/tmp/boot.img", "%(device)s");' % args
             % args)
       elif partition_type == "EMMC":
         self.script.append(
             'package_extract_file("%(fn)s", "%(device)s");' % args)
       elif partition_type == "BML":
-	        self.script.append(
+        self.script.append(
             ('assert(package_extract_file("%(fn)s", "/tmp/%(device)s.img"),\n'
              '       write_raw_image("/tmp/%(device)s.img", "%(device)s"),\n'
              '       delete("/tmp/%(device)s.img"));') % args)
