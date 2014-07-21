@@ -25,12 +25,24 @@ DIR=$(pwd)
 echo -n "revert dpi changes"
 cd $DIR/vendor/slim/; git fetch https://github.com/p990-slimrom/vendor_slim.git && git cherry-pick dec1c9af22385a73aba37835b4eed38f057e5d6e
 
-echo -n "Apply ggc4.8 changes"
-cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 99ef9408ab4b04b440cc9aeed9d37f849c7b9723
+
+#echo -n "apply JustArchi's ArchiDroid Optimizations V3"
+#cd $DIR/build/; git fetch https://github.com/SlimKatXperia/android_build.git && git cherry-pick 6b734ccc7aa260b113e07bc84577e4414362f9e3
+
+#echo -n "Apply gcc4.8 changes"
+#cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 99ef9408ab4b04b440cc9aeed9d37f849c7b9723
+
+echo -n "remove the selinux packages"
 cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 0564f2b5031c60f146aaf7e500835dea4f4d4e92
 
-echo -n "Apply extFAT patch"
-cd $DIR/external/fuse/; git fetch https://github.com/JustArchi/android_external_fuse.git && git cherry-pick 78ebbc4404de260862dca5f0454bffccee650e0d
+#echo -n "Apply extFAT patch"
+#cd $DIR/external/fuse/; git fetch https://github.com/JustArchi/android_external_fuse.git && git cherry-pick 78ebbc4404de260862dca5f0454bffccee650e0d
+
+#echo -n "Apply patch to external/valgrind"
+#cd $DIR/external/valgrind/; git fetch https://github.com/XperiaSTE/android_external_valgrind.git && git cherry-pick 679a4e571ef77f47892a785e852d8219c1e6807a
+
+#echo -n "Apply blueZ changes to bionic"
+#cd $DIR/bionic/; git fetch https://github.com/SlimKatXperia/android_bionic.git && git cherry-pick ce07db5aa9855e1910ea0436ff1d7fbd7ffd74ba
 
 cd $DIR/
 
