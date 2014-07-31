@@ -62,8 +62,6 @@ on post-fs
     mkdir /data/lgdrm 0770 root root
     mkdir /data/wmdrm 0770 root root
 
-    setprop vold.post_fs_data_done 1
-
 on boot
 
 # Hall IC
