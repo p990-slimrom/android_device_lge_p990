@@ -1,5 +1,7 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+
 # Board-specific init
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init_recovery.rc:root/init_recovery.rc \
@@ -56,7 +58,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.respect_als=true \
     ro.bt.bdaddr_path=/sys/devices/platform/bd_address/bdaddr_if \
     debug.sf.electron_frames=42 \
-    ro.lge.audio_soundexception=true
+    ro.lge.audio_soundexception=true \
+    wifi.interface=wlan0 \
+    wifi.supplicant_scan_interval=15 \
+    tf.enable=y \
+    drm.service.enabled=true
 
 # force transparent statusbar
 PRODUCT_PROPERTY_OVERRIDES += \
