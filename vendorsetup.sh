@@ -44,6 +44,10 @@ cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && g
 #echo -n "Apply blueZ changes to bionic"
 #cd $DIR/bionic/; git fetch https://github.com/SlimKatXperia/android_bionic.git && git cherry-pick ce07db5aa9855e1910ea0436ff1d7fbd7ffd74ba
 
+echo -n "remove SliomOTA"
+cd $DIR/packages/apps/SlimCenter/; git fetch https://github.com/p990-slimrom/packages_apps_SlimCenter.git && git cherry-pick 1fdec6e946901d7d0a0f5e5f147fca6dc81ee9da
+cd $DIR/packages/apps/SlimCenter/; git fetch https://github.com/p990-slimrom/packages_apps_SlimCenter.git && git cherry-pick 4109dd21a6c7386f017417f982722a123f024364
+
 cd $DIR/
 
 
