@@ -23,7 +23,7 @@ mount -t cgroup -o timer_slack none /dev/timer_group
 mkdir /dev/timer_group/bg
 echo 100000000 > /dev/timer_group/bg/timer_slack.min_slack_ns
 
-echo 200 > /sys/kernel/mm/pksm/pages_to_scan
-echo 200 > /sys/kernel/mm/pksm/sleep_millisecs
-echo 1 > /sys/kernel/mm/pksm/deferred_timer
+#echo 200 > /sys/kernel/mm/pksm/pages_to_scan
+#echo 200 > /sys/kernel/mm/pksm/sleep_millisecs
+#echo 1 > /sys/kernel/mm/pksm/deferred_timer
 
