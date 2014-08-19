@@ -62,6 +62,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.force_transbar=true
 
+# enable storage swapping
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.vold.switchexternal=1 \
+    persist.sys.vold.switchablepair=sdcard0,sdcard1
+
 # Graphic glitches fix
 PRODUCT_PROPERTY_OVERRIDES += \
    debug.hwui.render_dirty_regions=false
