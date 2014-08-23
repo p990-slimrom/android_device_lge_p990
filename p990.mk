@@ -62,9 +62,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.force_transbar=true
 
-# enable storage swapping
+# storage swapping support
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.vold.switchexternal=1 \
+    persist.sys.vold.switchexternal=0 \
     persist.sys.vold.switchablepair=sdcard0,sdcard1
 
 # Graphic glitches fix
