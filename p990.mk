@@ -174,10 +174,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.vsnet-down:system/bin/init.vsnet-down \
     $(LOCAL_PATH)/gps_brcm_conf.xml:system/etc/gps_brcm_conf.xml
 
-# Build kernel module instead of copying
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/check_sdcard.sh:system/bin/check_sdcard.sh \
     $(LOCAL_PATH)/lgdrm.img:system/bin/lgdrm.img
@@ -194,7 +190,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/95kowalski:system/etc/init.d/95kowalski \
     $(LOCAL_PATH)/kernel/kowalski/alsa_amixer:system/xbin/alsa_amixer \
     $(LOCAL_PATH)/kernel/kowalski/iwconfig:system/xbin/iwconfig \
-    $(LOCAL_PATH)/kernel/kowalski/iwlist:system/xbin/iwlist
+    $(LOCAL_PATH)/kernel/kowalski/iwlist:system/xbin/iwlist \
+    $(LOCAL_PATH)/kernel/kowalski/KernelControl.apk:system/app/KernelControl.apk
 
 PRODUCT_PACKAGES += \
     lgcpversion
