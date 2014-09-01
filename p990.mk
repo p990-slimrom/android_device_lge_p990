@@ -6,6 +6,7 @@ $(call inherit-product, vendor/google/tiny_gapps_nonneon_tonyp.mk)
 $(call inherit-product, vendor/djnoxd/vendor_djnoxd.mk)
 
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 
 # Board-specific init
 PRODUCT_COPY_FILES += \

@@ -42,6 +42,10 @@ on early-init
 on fs
     setprop ro.crypto.fuse_sdcard true
 
+   # Create this file in case it doesn't exist, needed to switch wifi modes:
+   write /data/misc/wifi/firmware_path ""
+   chmod 0666 /data/misc/wifi/firmware_path
+
 on post-fs
 
     chmod 0777 /data/misc/wifi/config_mac       # 20101202 mingi.sung@lge.com [WLAN] AT command - MAC address read/write function
@@ -175,23 +179,19 @@ service lgdrm /system/bin/lgdrmserver
 
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
     -O/data/misc/wifi/sockets \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
-    #   we will start as root and wpa_supplicant will switch to user wifi
-    #   after setting up the capabilities required for WEXT
-    #   user wifi
-    #   group wifi inet keystore
+    # we will start as root and wpa_supplicant will switch to user wifi
+    # after setting up the capabilities required for WEXT
+    # user wifi
+    # group wifi inet keystore
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
 
 service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
-    class main
-    disabled
-    oneshot
-
-service dhcpcd_p2p /system/bin/dhcpcd -aABKL
     class main
     disabled
     oneshot
