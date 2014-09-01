@@ -1,6 +1,7 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
