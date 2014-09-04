@@ -139,11 +139,16 @@ BOARD_MALLOC_ALIGNMENT := 16
 # Skip droiddoc build to save build time
 BOARD_SKIP_ANDROID_DOC_BUILD := true
 
-#BOARD_SEPOLICY_DIRS += \
-#    $(LOCAL_PATH)/sepolicy
 
-#BOARD_SEPOLICY_UNION += \
-#    file_contexts \
-#    device.te \
-#    domain.te \
-#    file.te
+ifeq ($(HAVE_SELINUX),true)
+
+BOARD_SEPOLICY_DIRS += \
+device/lge/p880/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+    file_contexts \
+    device.te \
+    domain.te \
+    file.te
+
+endif
