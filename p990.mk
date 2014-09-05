@@ -197,6 +197,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     lgcpversion
 
+# F2FS filesystem
+PRODUCT_PACKAGES += \
+     mkfs.f2fs \
+     fsck.f2fs \
+     fibmap.f2fs \
+     f2fstat
+
 PRODUCT_NAME := full_p990
 PRODUCT_DEVICE := p990
 PRODUCT_MODEL := LG-P990
