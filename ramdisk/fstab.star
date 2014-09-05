@@ -4,9 +4,9 @@
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
 # mount points
-/dev/block/mmcblk0p12                          /system           ext4    ro,noatime,nosuid                                            wait
+/dev/block/mmcblk0p12                          /system           f2fs    ro,noatime,nosuid                                            wait
 /dev/block/mmcblk0p2                           /cache            ext4    noatime,nosuid,nodev,data=writeback,nodelalloc,errors=panic  wait
-/dev/block/mmcblk0p9                           /data             ext4    noatime,nosuid,nodev,data=writeback,nodelalloc,errors=panic  wait,encryptable=footer
+/dev/block/mmcblk0p9                           /data             f2fs    noatime,nosuid,nodev,nodiratime,inline_xattr,errors=recover  wait,nonremovable,encryptable=footer,length=-16384
 /dev/block/mmcblk0p7                           /lgdrm            ext3    noatime,nosuid,nodev,errors=panic                            wait
 /dev/block/mmcblk0p6                           /boot             emmc    defaults                                                     recoveryonly
 /dev/block/mmcblk0p8                           /recovery         emmc    defaults                                                     recoveryonly
