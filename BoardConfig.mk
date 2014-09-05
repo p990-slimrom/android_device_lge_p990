@@ -26,6 +26,10 @@ NEED_WORKAROUND_CORTEX_A9_745320 := true
 TARGET_GCC_VERSION_EXP := 4.8
 #TARGET_USE_O3 := true
 
+# Optimization build flags
+TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=vfpv3-d16 -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=vfpv3-d16 -mfloat-abi=softfp
+
 # filesystem
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -67,8 +71,6 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUEDROID_VENDOR_CONF := $(LOCAL_PATH)/config/bluetooth/vnd_star.txt
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/config/bluetooth
-BOARD_BLUETOOTH_LIBBT_VNDCFG := $(LOCAL_PATH)/config/bluetooth/bt_vendor.conf
-TARGET_NEEDS_BLUETOOTH_INIT_DELAY := true
 
 # audio
 COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB 
@@ -128,6 +130,9 @@ TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+
+# F2FS filesystem
+TARGET_USERIMAGES_USE_F2FS := true
 
 # Various
 TARGET_USE_PIPE := true
