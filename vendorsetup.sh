@@ -32,8 +32,9 @@ cd $DIR/vendor/slim/; git fetch https://github.com/p990-slimrom/vendor_slim.git 
 #echo -n "Apply gcc4.8 changes"
 #cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 99ef9408ab4b04b440cc9aeed9d37f849c7b9723
 
-echo -n "remove the selinux packages"
-cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 0564f2b5031c60f146aaf7e500835dea4f4d4e92
+#removed for the moment
+#echo -n "remove the selinux packages"
+#cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 0564f2b5031c60f146aaf7e500835dea4f4d4e92
 
 echo -n "Prepare for gcc4.8"
 cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 290113bbcde13c112d22571b0c3cd418faa645c9
