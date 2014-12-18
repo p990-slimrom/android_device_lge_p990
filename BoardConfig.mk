@@ -120,6 +120,9 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/ramdisk/fstab.star
 RECOVERY_FSTAB_VERSION := 2
 
+# Jemalloc causes a lot of random crash on free()
+MALLOC_IMPL := dlmalloc
+
 # Since some recoveries don't support the "set_metadata" command, try not use them
 USE_SET_METADATA := false
 SKIP_SET_METADATA := true
