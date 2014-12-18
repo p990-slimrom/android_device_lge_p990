@@ -18,8 +18,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
     $(LOCAL_PATH)/egl.cfg:system/lib/egl/egl.cfg \
     $(LOCAL_PATH)/prebuilt/setup-recovery:system/bin/setup-recovery \
-    $(LOCAL_PATH)/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    $(LOCAL_PATH)/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
+
+# Wifi files
+PRODUCT_PACKAGES += \
+	dhcpcd.conf \
+	hostapd \
+	wpa_supplicant \
+	wpa_supplicant.conf
 
 # Audio files
 PRODUCT_COPY_FILES += \

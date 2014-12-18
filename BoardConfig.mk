@@ -30,7 +30,7 @@ TARGET_GCC_VERSION_EXP := 4.8
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=vfpv3-d16 -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=vfpv3-d16 -mfloat-abi=softfp
 
-# filesystem
+# Filesystem
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00800000
@@ -43,7 +43,13 @@ BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_EXTERNAL_APPS := sdcard1
 
-# kernel
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
+
+# Compat
+TARGET_USES_LOGD := false
+
+# Kernel
 BOARD_KERNEL_CMDLINE := 
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800
@@ -54,7 +60,7 @@ HAVE_SELINUX := false
 # prebuilt kernel
 TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel/zImage
 
-# wifi
+# Wifi
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
@@ -66,22 +72,22 @@ WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 BOARD_LEGACY_NL80211_STA_EVENTS := true
 
-# bluetooth
+# Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUEDROID_VENDOR_CONF := $(LOCAL_PATH)/config/bluetooth/vnd_star.txt
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/config/bluetooth
 
-# audio
+# Audio
 COMMON_GLOBAL_CFLAGS += -DICS_AUDIO_BLOB 
 TARGET_DONT_SET_AUDIO_AAC_FORMAT := true
 BOARD_HAVE_PRE_KITKAT_AUDIO_BLOB := true
 
-# camera
+# Camera
 COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB -DNEEDS_VECTORIMPL_SYMBOLS
 USE_DEVICE_SPECIFIC_CAMERA := true
 
-# graphics
+# Graphics
 BOARD_USE_SKIA_LCDTEXT := true
 USE_OPENGL_RENDERER := true
 BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
@@ -96,18 +102,18 @@ MAX_EGL_CACHE_KEY_SIZE := 4096
 MAX_EGL_CACHE_SIZE := 2146304
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
-# fm
+# FM
 #BOARD_HAVE_FM_RADIO := true
 #BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
-# assert
+# Assert
 TARGET_OTA_ASSERT_DEVICE := p990
 
 # ril
 BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril/
 BOARD_MOBILEDATA_INTERFACE_NAME := "vsnet0"
 
-# recovery
+# Recovery
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/fsl-tegra-udc/gadget/lun%d/file"
 TARGET_RECOVERY_PRE_COMMAND := "/system/bin/setup-recovery"
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -118,7 +124,7 @@ RECOVERY_FSTAB_VERSION := 2
 USE_SET_METADATA := false
 SKIP_SET_METADATA := true
 
-# sensors
+# Sensors
 BOARD_SYSFS_LIGHT_SENSOR := "/sys/class/backlight/aat2870-backlight/brightness_mode"
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../$(LOCAL_PATH)/vibrator.c
 
@@ -138,7 +144,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USE_PIPE := true
 TARGET_USE_OS := true
 
-# testing
+# Testing
 BOARD_MALLOC_ALIGNMENT := 16
 
 # Skip droiddoc build to save build time
