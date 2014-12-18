@@ -43,11 +43,20 @@ BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_EXTERNAL_APPS := sdcard1
 
+# Don't generate block mode update zips
+BLOCK_BASED_OTA := false
+
+# Lollipop removes supports for NON PIE executables
+TARGET_NEEDS_NON_PIE_SUPPORT := true
+
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
 # Compat
 TARGET_USES_LOGD := false
+
+# USB Mass Storage
+BOARD_USE_USB_MASS_STORAGE_SWITCH := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE := 
@@ -122,6 +131,19 @@ RECOVERY_FSTAB_VERSION := 2
 
 # Jemalloc causes a lot of random crash on free()
 MALLOC_IMPL := dlmalloc
+
+# Enable dex-preoptimization to speed up first boot sequence
+ifeq ($(HOST_OS),linux)
+  ifeq ($(TARGET_BUILD_VARIANT),userdebug)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+    endif
+  endif
+endif
+DONT_DEXPREOPT_PREBUILTS := true
+
+# Enable Minikin text layout engine
+USE_MINIKIN := true
 
 # Since some recoveries don't support the "set_metadata" command, try not use them
 USE_SET_METADATA := false
