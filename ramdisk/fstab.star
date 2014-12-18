@@ -12,8 +12,8 @@
 /dev/block/mmcblk0p8                           /recovery         emmc    defaults                                                     recoveryonly
 # internal sd
 /dev/block/mmcblk0p11                          /sdcard           vfat    defaults                                                     recoveryonly
-/devices/platform/sdhci-tegra.3/mmc_host/mmc0  auto              auto    defaults                                                     voldmanaged=sdcard0:11,nonremovable,noemulatedsd,encryptable
+/devices/platform/sdhci-tegra.3/mmc_host/mmc0*  auto              auto    defaults                                                     voldmanaged=sdcard0:11,nonremovable,noemulatedsd,encryptable
 # external sd
 /dev/block/mmcblk1p1                           /external_sd      vfat    defaults                                                     recoveryonly
-/devices/platform/sdhci-tegra.2/mmc_host/mmc1  auto              auto    defaults                                                     voldmanaged=sdcard1:auto,noemulatedsd
+/devices/platform/sdhci-tegra.2/mmc_host/mmc1*  auto              auto    defaults                                                     voldmanaged=sdcard1:auto,noemulatedsd
 /dev/block/zram0                               none              swap    defaults zramsize=115343360
