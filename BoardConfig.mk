@@ -81,6 +81,9 @@ WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 BOARD_LEGACY_NL80211_STA_EVENTS := true
 
+# No support for Adaptive playback
+TARGET_NO_ADAPTIVE_PLAYBACK := true
+
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
