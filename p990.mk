@@ -137,7 +137,8 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     hwcomposer.default \
-    com.android.future.usb.accessory
+    com.android.future.usb.accessory \
+    e2fsck \
 
 # Enable Torch
 PRODUCT_PACKAGES += Torch
