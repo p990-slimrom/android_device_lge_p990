@@ -100,6 +100,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.zygote.disable_gl_preload=true
 
+# Always use the CPU pipeline for taking screenshots
+ro.bq.gpu_to_cpu_unsupported=true \
+
 # Disable JIT code cache to free up some ram when the device is running
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.jit.codecachesize=0
