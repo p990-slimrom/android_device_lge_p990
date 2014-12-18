@@ -530,6 +530,7 @@ else if get_stage("%(bcb_dev)s", "stage") == "3/3" then
 
   script.Print("")
   script.Print("Format and Mount System, Mount Data...")
+  script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
   script.FormatPartition("/system")
   script.Mount("/system")
   script.Mount("/data")
