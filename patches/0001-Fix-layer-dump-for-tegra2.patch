@@ -16,7 +16,7 @@ index b2b07a1..baba94e 100644
              }
  
              if (disp.list) {
-+				+
++
 +                if ( hwcApiVersion(mHwc) == 0)
 +                {
 +                    hwc_layer_list_t *list = (hwc_layer_list_t*) disp.list;
