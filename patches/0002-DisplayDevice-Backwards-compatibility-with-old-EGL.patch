@@ -1,4 +1,4 @@
-From 9e20f8e652cc4daf5126ee145837fcce4d3997a2 Mon Sep 17 00:00:00 2001
+From f5e456d2703f348bc78100201232d0283262abbe Mon Sep 17 00:00:00 2001
 From: Andrew Dodd <atd7@cornell.edu>
 Date: Mon, 10 Dec 2012 08:26:54 -0500
 Subject: [PATCH 2/3] DisplayDevice: Backwards compatibility with old EGL
@@ -37,11 +37,11 @@ Change-Id: If7c455035a002f272fa1a8af1cfcc60eb7ade894
  2 files changed, 12 insertions(+)
 
 diff --git a/services/surfaceflinger/Android.mk b/services/surfaceflinger/Android.mk
-index e33daa2..66b4575 100644
+index 1abcbed..5154701 100644
 --- a/services/surfaceflinger/Android.mk
 +++ b/services/surfaceflinger/Android.mk
-@@ -52,6 +52,10 @@ ifeq ($(TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS),true)
-     LOCAL_CFLAGS += -DFORCE_HWC_COPY_FOR_VIRTUAL_DISPLAYS
+@@ -51,6 +51,10 @@ ifeq ($(TARGET_DISABLE_TRIPLE_BUFFERING),true)
+ 	LOCAL_CFLAGS += -DTARGET_DISABLE_TRIPLE_BUFFERING
  endif
  
 +ifeq ($(BOARD_EGL_NEEDS_FNW),true)
@@ -52,7 +52,7 @@ index e33daa2..66b4575 100644
    LOCAL_CFLAGS += -DNUM_FRAMEBUFFER_SURFACE_BUFFERS=$(NUM_FRAMEBUFFER_SURFACE_BUFFERS)
  endif
 diff --git a/services/surfaceflinger/DisplayDevice.cpp b/services/surfaceflinger/DisplayDevice.cpp
-index 5fa513c..f75a508 100644
+index 76ab552..f262f1e 100644
 --- a/services/surfaceflinger/DisplayDevice.cpp
 +++ b/services/surfaceflinger/DisplayDevice.cpp
 @@ -29,6 +29,10 @@
@@ -66,18 +66,18 @@ index 5fa513c..f75a508 100644
  #include <hardware/gralloc.h>
  
  #include "DisplayHardware/DisplaySurface.h"
-@@ -74,7 +78,11 @@ DisplayDevice::DisplayDevice(
-       mOrientation()
+@@ -78,7 +82,11 @@ DisplayDevice::DisplayDevice(
+       mActiveConfig(0)
  {
      mNativeWindow = new Surface(producer, false);
-+#ifndef EGL_NEEDS_FNW
++    #ifndef EGL_NEEDS_FNW
      ANativeWindow* const window = mNativeWindow.get();
-+#else
++    #else
 +    ANativeWindow* const window = new FramebufferNativeWindow();
-+#endif
++    #endif
  
-     int format;
-     window->query(window, NATIVE_WINDOW_FORMAT, &format);
+     /*
+      * Create our display's surface
 -- 
-1.8.3.2
+1.9.1
 
