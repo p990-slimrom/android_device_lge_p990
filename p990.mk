@@ -64,7 +64,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.bq.gpu_to_cpu_unsupported=1 \
     sys.disable_ext_animation=1 \
     ro.telephony.call_ring.multiple=false \
     ro.telephony.call_ring.delay=3000 \
