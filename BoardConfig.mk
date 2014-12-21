@@ -134,16 +134,6 @@ RECOVERY_FSTAB_VERSION := 2
 # Jemalloc causes a lot of random crash on free()
 MALLOC_IMPL := dlmalloc
 
-# Enable dex-preoptimization to speed up first boot sequence
-ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),userdebug)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
-  endif
-endif
-DONT_DEXPREOPT_PREBUILTS := true
-
 # Enable Minikin text layout engine
 USE_MINIKIN := true
 
