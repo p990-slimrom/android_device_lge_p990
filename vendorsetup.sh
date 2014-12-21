@@ -36,10 +36,6 @@ cd $DIR/vendor/slim/; git fetch https://github.com/p990-slimrom/vendor_slim.git 
 #echo -n "remove the selinux packages"
 #cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 0564f2b5031c60f146aaf7e500835dea4f4d4e92
 
-echo -n "Prepare for gcc4.8"
-cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick 290113bbcde13c112d22571b0c3cd418faa645c9
-cd $DIR/build/; git fetch https://github.com/p990-slimrom/android_build.git && git cherry-pick a4a021597c0fa477520c93f5b4831619fdf860c9
-
 #echo -n "Apply extFAT patch"
 #cd $DIR/external/fuse/; git fetch https://github.com/JustArchi/android_external_fuse.git && git cherry-pick 78ebbc4404de260862dca5f0454bffccee650e0d
 
