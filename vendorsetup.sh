@@ -21,7 +21,6 @@ echo ""
 echo "Applying patches for P990"
 echo ""
 
-DIR=$(pwd)
 echo "Apply patches related to SlimRom"
 echo -n "revert dpi changes"
 cd vendor/slim/; git fetch https://github.com/p990-slimrom/vendor_slim.git && git cherry-pick dec1c9af22385a73aba37835b4eed38f057e5d6e > /dev/null 2>&1
@@ -50,6 +49,16 @@ else
        echo "     [FAIL]"
 fi
 
+
+echo "Apply patch to build/core"
+echo -n "0001-Don-t-use-Block-based-ota-if-defined-in-the-boardcon.patch"
+(cd build/core; git am ../../device/lge/p990/patches/0001-Don-t-use-Block-based-ota-if-defined-in-the-boardcon.patch) > /dev/null 2>&1
+if [ $? == 0 ]; then
+       echo "     [DONE]"
+else
+       (cd build/core; git am --abort)
+       echo "     [FAIL]"
+fi
 
 echo "Apply patch to frameworks/native"
 echo -n "Apply patch 0002-DisplayDevice-Backwards-compatibility-with-old-EGL.patch"

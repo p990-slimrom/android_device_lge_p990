@@ -1,0 +1,40 @@
+From e4110159e49081a147f19c206fad74bd6907d445 Mon Sep 17 00:00:00 2001
+From: Wulsic <wulsic@hotmail.com>
+Date: Mon, 22 Dec 2014 14:28:23 +0100
+Subject: [PATCH 1/1] Don't use Block based ota if defined in the
+ boardconfig.mk This modified Makefile allows us to disable block based ota
+ with BLOCK_BASED_OTA=false instead of that you have to remove the --block
+ line manually everytime. We have to wait until Cyanogenmod also implents this
+ in their official repo.
+
+Change-Id: I0674c0133c7e3dac53cc78bd14748f5c45986778
+---
+ core/Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/core/Makefile b/core/Makefile
+index 6c00bd8..e2002e8 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -1638,13 +1638,17 @@ ifneq ($(TARGET_UNIFIED_DEVICE),)
+     endif
+ endif
+ 
++ifneq ($(BLOCK_BASED_OTA),false)
++    $(INTERNAL_OTA_PACKAGE_TARGET): block_based_ota := --block
++endif
++
+ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
+ 	@echo "$(OTA_FROM_TARGET_SCRIPT)" > $(PRODUCT_OUT)/ota_script_path
+ 	@echo "$(override_device)" > $(PRODUCT_OUT)/ota_override_device
+ 	@echo -e ${CL_YLW}"Package OTA:"${CL_RST}" $@"
+ 	$(hide) MKBOOTIMG=$(MKBOOTIMG) \
+ 	   $(OTA_FROM_TARGET_SCRIPT) -v \
+-	   --block \
++	   $(block_based_ota)\
+ 	   -p $(HOST_OUT) \
+ 	   -k $(KEY_CERT_PAIR) \
+ 	   --backup=$(backuptool) \
+-- 
+1.9.1
+
