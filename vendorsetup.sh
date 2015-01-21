@@ -94,13 +94,3 @@ else
 	(cd frameworks/av; git am --abort)
 	echo "     [FAIL]"
 fi
-
-echo "Apply patch to external/chromium_org"
-echo -n "Apply patch 0001-Work-around-broken-GL_TEXTURE_BINDING_EXTERNAL_OES-q.patch"
-(cd external/chromium_org; git am ../../device/lge/p990/patches/0001-Work-around-broken-GL_TEXTURE_BINDING_EXTERNAL_OES-q.patch) > /dev/null 2>&1
-if [ $? == 0 ]; then
-	echo "     [DONE]"
-else
-	(cd external/chromium_org; git am --abort)
-	echo "     [FAIL]"
-fi
