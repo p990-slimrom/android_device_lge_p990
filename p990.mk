@@ -161,9 +161,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/twrp.fstab:recovery/root/etc/twrp.fstab
 
 #Disable SELinux since it needs some more configuration
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.boot.selinux=disabled \
-    ro.build.selinux=0
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.boot.selinux=disabled \
+#    ro.build.selinux=0
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/charger:root/charger \
