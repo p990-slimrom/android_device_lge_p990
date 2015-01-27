@@ -260,10 +260,6 @@ on property:dev.bootcomplete=1
     write /sys/kernel/mm/ksm/pages_to_scan 128
     write /sys/kernel/mm/ksm/sleep_millisecs 1000
     write /sys/kernel/mm/ksm/run 1
-### PKSM
-    write /sys/kernel/mm/pksm/pages_to_scan 100
-    write /sys/kernel/mm/pksm/sleep_millisecs 500
-    write /sys/kernel/mm/pksm/run 1
 ### ZRAM
     write /proc/sys/vm/page-cluster 0
 
