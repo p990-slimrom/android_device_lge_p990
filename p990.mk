@@ -195,12 +195,11 @@ LOCAL_KERNEL := device/lge/p990/kernel/zImage
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko \
-    $(LOCAL_PATH)/kernel/zram.ko:system/lib/modules/zram.ko
+    $(LOCAL_PATH)/kernel/bthid.ko:system/lib/modules/bthid.ko
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/power.tegra.so:system/lib/hw/power.tegra.so \
-    $(LOCAL_PATH)/kernel/kowalski/KowalskiManager.apk:system/app/KowalskiManager.apk \
+    $(LOCAL_PATH)/kernel/kowalski/KernelControl.apk:system/app/KernelControl.apk \
     $(LOCAL_PATH)/kernel/kowalski/95kowalski:system/etc/init.d/95kowalski \
     $(LOCAL_PATH)/kernel/kowalski/alsa_amixer:system/xbin/alsa_amixer \
     $(LOCAL_PATH)/kernel/kowalski/iwconfig:system/xbin/iwconfig \

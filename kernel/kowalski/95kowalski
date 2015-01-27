@@ -22,4 +22,3 @@ mount -t cgroup -o timer_slack none /dev/timer_group
 
 mkdir /dev/timer_group/bg
 echo 100000000 > /dev/timer_group/bg/timer_slack.min_slack_ns
-
