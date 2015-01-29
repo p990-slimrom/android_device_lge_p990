@@ -199,6 +199,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/kernel/kowalski/power.tegra.so:system/lib/hw/power.tegra.so \
+    $(LOCAL_PATH)/kernel/kowalski/KowalskiManager.apk:system/app/KowalskiManager.apk \
     $(LOCAL_PATH)/kernel/kowalski/KernelControl.apk:system/app/KernelControl.apk \
     $(LOCAL_PATH)/kernel/kowalski/95kowalski:system/etc/init.d/95kowalski \
     $(LOCAL_PATH)/kernel/kowalski/alsa_amixer:system/xbin/alsa_amixer \
