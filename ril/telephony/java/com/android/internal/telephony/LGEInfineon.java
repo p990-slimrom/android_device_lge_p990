@@ -275,9 +275,13 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                     if ("LGSU660AT".equalsIgnoreCase(basebandSplit[0])) {
                        ignoreNitz = true;
                     } else {
-                    	// Detect V28e or newer BBs like
-                        // LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0
-                        if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
+                        // Detect V28e or newer Basebands
+                        // 1035.21_20121130
+                        if ("1035.21_20121130".equals(basebandVersion)) {
+                            ignoreNitz = true;
+                        }
+                        // LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0 etc.
+                        else if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
                         		&& (basebandSplit.length > 2)
                                	 	&& (basebandSplit[2].length() == 4)
                                 	&& (basebandSplit[2].toLowerCase().startsWith("v"))
