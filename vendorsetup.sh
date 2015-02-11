@@ -23,6 +23,9 @@ echo ""
 
 DIR=$(pwd)
 
+echo -n "fix PlayStore graphical glitches"
+cd $DIR/external/webp/; git fetch https://github.com/JustArchi/android_external_webp.git && git cherry-pick 36c6201fbb108d6b757f860e2cd57f3982191662
+
 #echo -n "apply JustArchi's ArchiDroid Optimizations V3"
 #cd $DIR/build/; git fetch https://github.com/SlimKatXperia/android_build.git && git cherry-pick 6b734ccc7aa260b113e07bc84577e4414362f9e3
 
