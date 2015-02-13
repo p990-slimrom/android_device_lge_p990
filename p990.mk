@@ -1,7 +1,7 @@
 DEVICE_PACKAGE_OVERLAYS += device/lge/p990/overlay
 
-MINI_GAPPS := true
-$(call inherit-product, vendor/google/tiny_gapps_nonneon_tonyp.mk)
+#MINI_GAPPS := true
+#$(call inherit-product, vendor/google/tiny_gapps_nonneon_tonyp.mk)
 
 $(call inherit-product, vendor/djnoxd/vendor_djnoxd.mk)
 
