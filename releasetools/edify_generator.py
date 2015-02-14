@@ -106,15 +106,6 @@ class EdifyGenerator(object):
            ");")
     self.script.append(self._WordWrap(cmd))
 
-  def CheckSdcard(self):
-    self.script.append('ui_print("checking and fixing filesystems");')
-    self.script.append('package_extract_file("system/bin/lgdrm.img", "/tmp/lgdrm.img");')
-    self.script.append('package_extract_file("system/bin/check_sdcard.sh", "/tmp/check_sdcard.sh");')
-    self.script.append('set_perm(0, 0, 0755, "/tmp/check_sdcard.sh");')
-    self.script.append('run_program("/tmp/check_sdcard.sh", "");')
-    self.script.append('delete("/system/bin/check_sdcard.sh");')
-    self.script.append('delete("/system/bin/lgdrm.img");')
-
   def RunBackup(self, command):
     self.script.append('package_extract_dir("system/addon.d", "/system/addon.d");')
     self.script.append('package_extract_file("system/bin/backuptool.sh", "/tmp/backuptool.sh");')
