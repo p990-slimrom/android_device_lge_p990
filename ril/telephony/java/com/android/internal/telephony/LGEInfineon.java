@@ -267,34 +267,27 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 result[0] = ret;
                 result[1] = Long.valueOf(nitzReceiveTime);
 
-                // RIL_UNSOL_NITZ_TIME_RECEIVED handling
-                boolean ignoreNitz = false;
-                if (SystemProperties.getBoolean(TelephonyProperties.PROPERTY_IGNORE_NITZ, false)) {
-                    ignoreNitz = true;
-                } else {
-                    if ("LGSU660AT".equalsIgnoreCase(basebandSplit[0])) {
-                       ignoreNitz = true;
-                    } else {
-                        // Detect V28e or newer Basebands
-                        // 1035.21_20121130
-                        if ("1035.21_20121130".equals(basebandVersion)) {
-                            ignoreNitz = true;
-                        }
-                        // LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0 etc.
-                        else if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
-                                && (basebandSplit.length > 2)
-                                && (basebandSplit[2].length() == 4)
+                /*
+                * Ignore UNSOL_NITZ_TIME_RECEIVED when:
+                *   telephony.test.ignore.nitz == true
+                *   Using a SU660 Baseband
+                *   Using a LGEP990 BBaseband >= v28e 
+                *    - e.g. "LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0"
+                *    - or: failed BB detections defaulting to "1035.21_20121130"
+                *   Needed due to NITZ changes in the newer Basebands
+                */
+                if ((SystemProperties.getBoolean(TelephonyProperties.PROPERTY_IGNORE_NITZ, false))
+                   || ("LGSU660AT".equalsIgnoreCase(basebandSplit[0]))
+                   || (basebandVersion.contains("1035.21_20121130")) 
+                   || ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
+                           && (basebandSplit.length > 2)
+                                   && (basebandSplit[2].length() == 4)
                                 && (basebandSplit[2].toLowerCase().startsWith("v"))
-                                && (basebandSplit[2].compareToIgnoreCase("V28e") >= 0)) {
-                            ignoreNitz = true;
-                        }
-                    }
-                }
-                if (ignoreNitz) {
+                                && (basebandSplit[2].compareToIgnoreCase("V28e") >= 0))) {
+                    // do nothing
                     if (RILJ_LOGD) riljLog("ignoring UNSOL_NITZ_TIME_RECEIVED");
                 } else {
                     if (mNITZTimeRegistrant != null) {
-
                         mNITZTimeRegistrant
                             .notifyRegistrant(new AsyncResult (null, result, null));
                     } else {
