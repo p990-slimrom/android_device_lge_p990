@@ -203,7 +203,7 @@ public class LGEInfineon extends RIL implements CommandsInterface {
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED:
             case RIL_UNSOL_LGE_SIM_STATE_CHANGED_NEW: ret =  responseVoid(p); break;
             case RIL_UNSOL_NITZ_TIME_RECEIVED: ret =  responseNitz(p); break;
-	    case RIL_UNSOL_LGE_XCALLSTAT: ret = responseVoid(p); break;
+            case RIL_UNSOL_LGE_XCALLSTAT: ret = responseVoid(p); break;
             default:
                 // Rewind the Parcel
                 p.setDataPosition(dataPosition);
@@ -213,8 +213,8 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 return;
         }
         switch(response) {
-	    case RIL_UNSOL_LGE_XCALLSTAT:
-		break;
+        case RIL_UNSOL_LGE_XCALLSTAT:
+        break;
             case RIL_UNSOL_ON_USSD:
                 String[] resp = (String[])ret;
 
@@ -240,9 +240,9 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                 break;
             case RIL_UNSOL_LGE_UNSOL:
                 /* Adjust request IDs */
-            	if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])) {
-            		RIL_REQUEST_HANG_UP_CALL = 206;
-            	}
+                if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])) {
+                    RIL_REQUEST_HANG_UP_CALL = 206;
+                }
                 break;
             case RIL_UNSOL_LGE_RESTART_RILD:
                 restartRild();
@@ -282,11 +282,11 @@ public class LGEInfineon extends RIL implements CommandsInterface {
                         }
                         // LGP990AT-00-V30a-EUR-XXX-NOV-30-2012+0 etc.
                         else if ("LGP990AT".equalsIgnoreCase(basebandSplit[0])
-                        		&& (basebandSplit.length > 2)
-                               	 	&& (basebandSplit[2].length() == 4)
-                                	&& (basebandSplit[2].toLowerCase().startsWith("v"))
-                                	&& (basebandSplit[2].compareToIgnoreCase("V28e") >= 0)) {
-                        	ignoreNitz = true;
+                                && (basebandSplit.length > 2)
+                                && (basebandSplit[2].length() == 4)
+                                && (basebandSplit[2].toLowerCase().startsWith("v"))
+                                && (basebandSplit[2].compareToIgnoreCase("V28e") >= 0)) {
+                            ignoreNitz = true;
                         }
                     }
                 }
@@ -337,7 +337,7 @@ public class LGEInfineon extends RIL implements CommandsInterface {
             dateParser = new SimpleDateFormat("yy/MM/dd,HH:mm:ss");
 
             /* Directly calculate UTC time using DST Offset */
-            int offset = tzoffset*15*60*1000;	// DST corrected
+            int offset = tzoffset*15*60*1000; // DST corrected
             long when = dateParser.parse(parceldata).getTime() - offset;
             Date d = new Date(when);
             response = dateFormatter.format(d);
