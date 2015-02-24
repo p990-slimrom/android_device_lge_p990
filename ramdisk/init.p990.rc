@@ -26,20 +26,25 @@ on boot
 # gps permissions
     chown system system /sys/devices/platform/gps_gpio/poweron
     chown system system /sys/devices/platform/gps_gpio/reset
-    chown system system /dev/ttyHS3
+    chmod 0660 /dev/ttyHS3
+    chown gps system /dev/ttyHS3
     mkdir /data/gps
-    chmod 777 /data/gps
+    chmod 770 /data/gps
+    chown gps system /data/gps
     mkdir /data/gps/var
-    chmod 777 /data/gps/var
+    chmod 770 /data/gps/var
     mkdir /data/gps/var/run
-    chmod 777 /data/gps/var/run
+    chmod 770 /data/gps/var/run
     mkdir /data/gps/log
-    chmod 777 /data/gps/log
+    chmod 770 /data/gps/log
+    chown system system /data/gps/log
     mkdir /data/cache
     chmod 777 /data/cache
+    chown system system /data/cache
     chown system system /system/bin/glgps
     chown system system /system/etc/gps_brcm_conf.xml
     chown system system /system/etc/cert/
+    chown system system /system/etc/cert/lge.cer
     chown system system /system/etc/cert/537a0176.0
     chown system system /system/etc/cert/c9dbfc2e.0
     chown system system /system/etc/cert/ddc328ff.0
@@ -58,9 +63,9 @@ service charger /charger
     oneshot
 
 service glgps /system/bin/glgps -c /system/etc/gps_brcm_conf.xml
-    class core
+    class main
     user system
-    group net_raw sdcard_rw system
+    group net_raw sdcard_rw system radio
 
 service setcpversion /system/bin/lgcpversion
     class main
