@@ -16,14 +16,13 @@
 	  acPortName="/dev/ttyHS3" lBaudRate="460800"  cLogEnabled="true" acLogDirectory="/data/gps/log" ltoFileName="lto.dat" 
        enhanced-assisted="false" cp-enhanced-assisted="true" TISEnabled="false" RILEnabled="false" 
               
-       arp-supl-enable="true" arp-supl-cap-msb="true" arp-supl-cap-msa="true" arp-supl-cap-ecid="false" arp-supl-ssl-method="SSLv23"
-       acSuplServer="supl.google.com" SuplPort="7276" tlsCertPath="/system/etc/cert/lge.cer" ReAidingType="3" ReAidingRetryIntervalSec="10" ReAidingIntervalSec="1800"
+       arp-supl-enable="false" arp-supl-cap-msb="false" arp-supl-cap-msa="false" arp-supl-cap-ecid="false" arp-supl-ssl-method="SSLv23"
+       acSuplServer="" SuplPort="7275" tlsCertPath="/system/etc/cert/lge.cer" ReAidingType="3" ReAidingRetryIntervalSec="10" ReAidingIntervalSec="1800"
 
-       LbsEnable="false" LbsLocal="true" LbsServer="bcmlbsqa2.glpals.com" LbsPort="7275" LbsSyncTimeSec = "60" LbsSyncLto="false" LbsSyncCells="false"
-       LbsGetGpsAssistance="true" LbsSyncLtoThresholdDays="3" LbsCellEnable="true" LbsGpsEnable="true" LbsWlanEnable="false"
+       LbsEnable="true" LbsLocal="true" LbsServer="216.31.208.121" LbsPort="7275" LbsSyncTimeSec = "60" LbsSyncLto="true" LbsSyncCells="false"
+       LbsGetGpsAssistance="true" LbsSyncLtoThresholdDays="3" LbsCellEnable="false" LbsGpsEnable="true" LbsWlanEnable="false"
 	   />
   <hal 
-       acNtpServer="pool.ntp.org"
        acNmeaOutName="/data/gpspipe"  
        ResetOnStart="false"
        gpioDelayMs="80"
