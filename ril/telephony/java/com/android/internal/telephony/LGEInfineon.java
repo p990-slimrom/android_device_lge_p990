@@ -36,6 +36,9 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class LGEInfineon extends RIL implements CommandsInterface {
+    public LGEInfineon(Context context, int networkMode, int cdmaSubscription, Integer instanceId) {
+        this(context, networkMode, cdmaSubscription);
+    }
 
     public LGEInfineon(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription);
@@ -431,3 +434,4 @@ public class LGEInfineon extends RIL implements CommandsInterface {
         return response;
     }
 }
+

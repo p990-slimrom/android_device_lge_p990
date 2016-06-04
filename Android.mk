@@ -1,26 +1,15 @@
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),p990)
-include $(call first-makefiles-under,$(call my-dir))
-endif
+# Copyright (C) 2010 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-ifneq ($(filter p990 p999, $(TARGET_BOOTLOADER_BOARD_NAME)),)
-include $(call first-makefiles-under,$(call my-dir))
-
-## Do not let gapps packages install this. It uses a lot of room,
-## move it to data and symlink it
-include $(CLEAR_VARS)
-LOCAL_MODULE := srec-en
-LOCAL_MODULE_CLASS := FAKE
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_SYSTEM)/base_rules.mk
-$(LOCAL_BUILT_MODULE): TARGET := /cache/srec/
-$(LOCAL_BUILT_MODULE): SYMLINK := $(TARGET_OUT)/usr/srec/en-US
-$(LOCAL_BUILT_MODULE):
-	$(hide) echo "Symlink: $(SYMLINK) -> $(TARGET)"
-	$(hide) mkdir -p $(dir $@)
-	$(hide) mkdir -p $(dir $(SYMLINK))
-	$(hide) rm -rf $@
-	$(hide) rm -rf $(SYMLINK)
-	$(hide) ln -sf $(TARGET) $(SYMLINK)
-	$(hide) touch $@
-
-endif
+LOCAL_PATH := $(my-dir)

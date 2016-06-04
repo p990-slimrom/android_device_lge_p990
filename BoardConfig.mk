@@ -22,6 +22,8 @@ TARGET_BOOTLOADER_BOARD_NAME := p990
 TARGET_ARCH_LOWMEM := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 NEED_WORKAROUND_CORTEX_A9_745320 := true
+DEBUG_NO_STDCXX11 := yes
+ARCH_ARM_HAVE_NEON := false
 
 # filesystem
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
@@ -35,7 +37,22 @@ BOARD_VOLD_MAX_PARTITIONS := 20
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 BOARD_HAS_NO_MISC_PARTITION := true
 
-# kernel
+# Don't generate block mode update zips
+BLOCK_BASED_OTA := false
+
+# Lollipop removes supports for NON PIE executables
+TARGET_NEEDS_NON_PIE_SUPPORT := true
+
+# Use a smaller subset of system fonts to keep image size lower
+SMALLER_FONT_FOOTPRINT := true
+
+# Compat
+#TARGET_USES_LOGD := false
+
+# USB Mass Storage
+BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+
+# Kernel
 BOARD_KERNEL_CMDLINE := 
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_PAGE_SIZE := 0x00000800

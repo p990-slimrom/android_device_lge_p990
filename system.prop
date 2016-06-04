@@ -22,3 +22,7 @@ ro.telephony.ril_class=LGEInfineon
 #
 # Enable RIL recovery
 persist.radio.rr.enable=1
+persist.service.adb.enable=1
+persist.sys.usb.config=mtp,adb
+ro.adb.secure=0
+ro.secure=0
