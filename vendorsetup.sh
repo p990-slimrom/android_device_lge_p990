@@ -29,7 +29,18 @@ cd $DIR/build/;
 git remote add slim https://github.com/SlimRoms/android_build.git
 git fetch slim
 git pull slim lp5.1
-git remote add p990 git@github.com:p990-slimrom/frameworks_av.git
+git remote add p990 git@github.com:p990-slimrom/android_build.git
+git fetch p990
+#git commit -m "merge branch"
+#git push p990 HEAD:lp5.1
+echo -n ""
+
+echo -n "bionic: merge upstream"
+cd $DIR/bionic/;
+git remote add slim https://github.com/SlimRoms/android_bionic.git
+git fetch slim
+git pull slim lp5.1
+git remote add p990 git@github.com:p990-slimrom/android_bionic.git
 git fetch p990
 #git commit -m "merge branch"
 #git push p990 HEAD:lp5.1
